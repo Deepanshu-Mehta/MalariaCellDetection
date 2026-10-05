@@ -1,0 +1,285 @@
+\documentclass[conference]{IEEEtran}
+\usepackage[T1]{fontenc}
+\usepackage{cite}
+\usepackage{amsmath}
+\usepackage{textcomp}
+
+\begin{document}
+
+\title{Automated Microscopic Diagnosis of Malaria}
+
+\author{\IEEEauthorblockN{Agrapujya Lashkari}
+\and
+\IEEEauthorblockN{Deepanshu Mehta}}
+
+\maketitle
+
+% ---------------------------------------------------------------------------
+% Section I was rewritten in Milestone 3. Sections II-VIII are the Phase-1
+% literature survey, unchanged.
+% ---------------------------------------------------------------------------
+\section{Introduction}
+Malaria remains one of the largest infectious-disease burdens in the world, with an
+estimated 249 million cases and 608{,}000 deaths in 2022 alone~\cite{who2023}. Light
+microscopy of Giemsa-stained blood smears is still the reference diagnostic in the
+low-resource settings where most of those cases occur.
+Analyzing malaria through manual microscopy is intensely time-consuming. It also
+introduces significant inter-observer variability, which naturally drove the research
+community to explore automated computer vision alternatives. When the NIH released its
+Malaria Dataset---containing over 27,000 images of individual cells---it finally gave
+developers the foundational raw material needed to start training diagnostic deep
+learning models.
+
+The work that followed (Sections~\ref{sec:transfer}--\ref{sec:danet}) moved in
+two directions that pull against each other. One line chased accuracy, from transfer
+learning and ensembles~\cite{rajaraman2018,rajaraman2019} to capsule networks and
+compact transformers~\cite{madhu2023,masud2022}. The other chased deployability, with
+small custom CNNs for phones and edge devices~\cite{rahman2019,fuhad2020,masud2020}.
+Reported cell-level accuracies now sit between 95\% and 99\%. Most of these numbers,
+however, come from one evaluation habit: the NIH cells are split \emph{at random},
+so cells from the same patient appear in both the training and the test set
+(Section~\ref{sec:gaps}). A score obtained this way measures how well a model
+recognizes patients it has already seen, not how it would perform on a new patient's
+slide.
+
+In this project we take DANet~\cite{ali2025danet} (Section~\ref{sec:danet}), a 2.3~M-parameter dilated attention
+network that reports 97.95\% accuracy on NIH with public code, as a representative of
+the lightweight line. We first reproduce it under the paper's own protocol.
+Reproduction required repairing the released code, which fails on import and has a
+32-way output layer for a 2-class task. It also required resolving an optimizer
+inconsistency: the learning rate given in the paper's hyperparameter table does not
+train at all. Our reproduction reaches 97.02\% accuracy, 96.30\% sensitivity and
+0.9945 ROC-AUC. That is inside the paper's own 5-fold cross-validation range
+(96.97--97.42\%) but below its headline figure, and the shortfall is concentrated in
+sensitivity, i.e.\ in missed infections.
+
+Analyzing the reproduced baseline exposes the mechanism behind the evaluation concern
+above. Under the random split, all 201 test patients also contribute training cells,
+and the patient identity alone explains 74--90\% of the variance in a cell's mean
+color. Each slide's stain therefore acts as a near-unique fingerprint that a network
+can exploit instead of parasite morphology. Building on evidence from computational
+pathology that color augmentation improves robustness to stain
+variation~\cite{tellez2019}, we hypothesize that \emph{adding stain-color
+augmentation, calibrated to the measured between-patient color spread, will raise
+DANet's sensitivity on unseen patients}. Specifically, we predict a gain of $+0.5$ to
+$+1.5$ points in sensitivity under a patient-level split, and no gain ($\pm0.3$ points)
+under the leaky cell-level split. We fix these predictions before running the
+experiment.
+
+The contributions of this work are:
+\begin{itemize}
+\item a documented reproduction of DANet, including the code and optimizer fixes
+needed for it to train and an analysis of the reproduction gap;
+\item a quantification of patient leakage and stain fingerprinting in the NIH dataset
+under the commonly used cell-level protocol;
+\item a single-variable, pre-registered hypothesis with predicted effect sizes, tested
+on a patient-level split with sensitivity, balanced accuracy and ROC-AUC as the
+primary metrics. No clinical claims are made.
+\end{itemize}
+The remainder of this report reviews prior work by theme
+(Sections~\ref{sec:transfer}--\ref{sec:danet}) and summarizes the open research
+gaps that motivate our hypothesis (Section~\ref{sec:gaps}).
+
+% ======================= Phase-1 survey (unchanged) =========================
+\section{Transfer Learning and Ensemble Approaches}\label{sec:transfer}
+In the early days of automated malaria detection, nobody really had the massive
+datasets required to train deep neural networks from the ground up without running
+into severe overfitting. To navigate this limitation, Rajaraman \emph{et al.} (2018)
+turned to transfer learning. They took pre-trained convolutional neural networks
+(CNNs), such as ResNet-50, and repurposed them to handle complex feature
+extraction~\cite{rajaraman2018}.
+
+\textbf{Problem Solved:} The sheer inability to train deep models from scratch due to
+data scarcity, alongside a desire to avoid tedious manual feature engineering.\\
+\textbf{How it was Solved:} The researchers brought in pre-trained ImageNet CNNs to
+act as automatic feature extractors.\\
+\textbf{Limitations:} Single deep learning models exhibited severe prediction
+variance. Basically, they proved far too sensitive to minor fluctuations and quirks
+within the training set.
+
+To smooth out this instability, Rajaraman \emph{et al.} (2019) proposed a model
+averaging ensemble~\cite{rajaraman2019}.
+
+\textbf{Problem Solved:} The jumpy, unreliable nature of relying on a single
+transfer-learning model for medical diagnosis.\\
+\textbf{How it was Solved:} By blending fine-tuned VGG-19 and SqueezeNet
+architectures. Because these distinct networks tended to make mistakes in completely
+different areas, averaging their output probabilities effectively stabilized the whole
+system.\\
+\textbf{Limitations:} Combining models is computationally expensive. The resulting
+setup was far too heavy for low-power clinics in the developing world where
+point-of-care malaria testing actually happens.
+
+\section{Resource-Constrained Architectures}
+The push to actually deploy these systems in the real world forced researchers to
+build leaner, custom networks. Rahman \emph{et al.} (2019) constructed an end-to-end
+custom CNN from scratch~\cite{rahman2019}. Pushing the envelope further, Fuhad
+\emph{et al.} (2020)~\cite{fuhad2020} and Masud \emph{et al.} (2020)~\cite{masud2020}
+designed ultra-lightweight architectures crafted specifically for smartphone
+diagnostics and IoT gadgets.
+
+\textbf{Problem Solved:} The bulky computational requirements of ensemble models that
+made field deployment virtually impossible.\\
+\textbf{How it was Solved:} The teams engineered ultra-light CNNs meant to look
+directly at raw red blood cell patches. They also scrubbed mislabeled anomalies from
+the dataset so the algorithms could run rapidly on cheap hardware.\\
+\textbf{Limitations:} The major trade-off was a total loss of interpretability. These
+tiny models operated entirely as ``black boxes,'' leaving doctors in the dark
+regarding whether the AI was actually seeing a \emph{Plasmodium} parasite or merely
+getting tricked by a random speck of staining dye.
+
+\section{Explainable AI (XAI) in Parasitology}
+To win back clinical trust and open up the black box, Rajaraman \emph{et al.} (2018)
+integrated Explainable AI (XAI) techniques directly into the diagnostic
+pipeline~\cite{rajaraman2018xai}.
+
+\textbf{Problem Solved:} Doctors inherently distrusted lightweight CNNs because they
+couldn't see how the AI was making its decisions.\\
+\textbf{How it was Solved:} By measuring occlusion sensitivity and generating Class
+Activation Maps (CAM), researchers could literally look at what the deepest
+convolutional filters were focusing on---proving the model was tracking the actual
+parasite rather than background noise.\\
+\textbf{Limitations:} Even with visual heatmaps, standard CNNs harbored a built-in
+structural flaw. Max-pooling operations aggressively shrink feature maps, which
+completely shreds the actual physical shape, spatial hierarchy, and relative
+orientation of the parasite.
+
+\section{Advanced Spatial and Contextual Modeling}
+To prevent CNN pooling layers from destroying crucial spatial data, Madhu \emph{et
+al.} (2023) introduced an imperative Inception-based Capsule Neural Network
+(CapsNet)~\cite{madhu2023}. Around the same time, Masud \emph{et al.} (2022) applied a
+Multiheaded attention-based Compact Convolutional Transformer (CCT)~\cite{masud2022}.
+
+\textbf{Problem Solved:} The destruction of a parasite's geometric structure and
+spatial layout caused by traditional max-pooling.\\
+\textbf{How it was Solved:} CapsNets used dynamic routing mechanisms to output vectors
+that kept the exact spatial pose intact. Meanwhile, the Transformers utilized
+self-attention mechanisms to evaluate the global context of the entire cell all at
+once.\\
+\textbf{Limitations:} While these models pushed classification accuracy to an
+incredible 99.25\%, the complex math involved was brutally heavy. This effectively
+undid all previous progress toward edge deployability. Furthermore, the networks were
+still stuck classifying perfectly pre-cropped, single cells.
+
+\section{Multi-Cell Object Detection}
+Out in real-world clinical settings, a microscope slide isn't a neat grid of isolated
+cells; it is a chaotic, overlapping mess. To bridge this practical gap, Zedda \emph{et
+al.} (2023) adapted the YOLOv8 object-detection architecture~\cite{zedda2023}.
+
+\textbf{Problem Solved:} Real clinics do not have the time to perfectly crop single
+cells before analyzing them.\\
+\textbf{How it was Solved:} They removed the prediction heads meant for massive
+objects and swapped in a Parasite Attention Module (PAM). This grabbed high-resolution
+details from earlier backbone layers to successfully spot tiny ring-stage parasites
+across a wide field of view.\\
+\textbf{Limitations:} A persistent hurdle was the model's fragility when faced with
+extreme data scarcity. It was also highly sensitive to certain data augmentations; for
+instance, applying a shear transform would warp the tiny parasites so much that the
+model simply failed to recognize them.
+
+\section{Hybrid Architectures and Synthetic Data Generation}\label{sec:synthetic}
+Trying to solve the fundamental data shortage without making the model too slow for
+rural clinics, Mmileng \emph{et al.} (2025) leaned on advanced spatial augmentations to
+generate a massive synthetic dataset of over 606,000 images~\cite{mmileng2025}.
+
+\textbf{Problem Solved:} The constant tug-of-war between needing massive datasets for
+advanced models and requiring extreme computational efficiency for resource-limited
+hardware.\\
+\textbf{How it was Solved:} The researchers trained a ConvNeXt V2 Tiny model---which
+blends Vision Transformer hierarchies with CNN speed---on this giant synthetic
+dataset, polishing it off with label smoothing and an AdamW optimizer.\\
+\textbf{Limitations:} While ConvNeXt represents the current state-of-the-art, relying
+so heavily on fake training data and pre-trained weights is risky. It demands rigorous
+ongoing validation to ensure the model doesn't suffer a domain shift when exposed to
+unfamiliar geographical staining variations or novel parasite strains in the real
+world.
+
+\section{Lightweight Attention Networks}\label{sec:danet}
+Rather than scaling models up, Ali \emph{et al.} (2025) asked how much attention a
+network actually needs, and built DANet, a Dilated Attention Network with only about
+2.3 million parameters~\cite{ali2025danet}. Each of its nine Dilated Attention Blocks
+stacks $3\times3$ convolutions with dilation rates of 1, 2 and 3, pools the result in
+two ways (average and max), and turns it into an attention map that re-weights the
+block's input.
+
+\textbf{Problem Solved:} The tug-of-war between the accuracy of heavy CNN--transformer
+hybrids and the tiny compute budget of point-of-care hardware, made worse by
+low-contrast smears in which parasites have blurry, indistinct borders.\\
+\textbf{How it was Solved:} Dilated convolutions widen the receptive field without
+adding parameters, while the attention map highlights the parasite region inside
+low-contrast cells. DANet reports 97.95\% accuracy and a 97.86\% F1-score on the NIH
+cells, runs on a Raspberry Pi~4, and releases its code publicly.\\
+\textbf{Limitations:} The evaluation still rests on a random, cell-level split of a
+single malaria dataset, so the same patients appear in both the training and the test
+sets. Interpretability is shown only through qualitative Grad-CAM examples, and the
+network is trained without any regularization on the strength of a no-overfitting
+claim.
+
+\section{Research Gaps and Opportunities}\label{sec:gaps}
+Even with sky-high accuracy in controlled laboratory tests, we aren't quite ready to
+put these models in real clinics without supervision. Phase 1 research flags a few
+major roadblocks:
+\begin{itemize}
+\item \textbf{Data Leakage via Cell-Level Splitting:} A surprisingly common
+methodological flaw is randomly splitting the NIH dataset at the individual cell
+level, rather than grouping it by patient. When models train this way, they often just
+memorize patient-specific staining artifacts instead of learning generalized parasite
+morphology. This creates a dangerous illusion of high accuracy.
+\item \textbf{Domain Generalization:} If you train a model strictly on the NIH images
+or their synthetic clones, it tends to suffer catastrophic performance drops the
+second you show it a blood smear from an unrepresented region with slightly different
+dye properties or novel parasite strains.
+\item \textbf{Transition to Instance-Level Detection:} For true clinical utility, the
+field has to move beyond analyzing perfectly isolated cells. The AI needs to scan
+entire, messy thick and thin blood smears to detect multiple instances of parasites in
+real-time.
+\item \textbf{Clinically Validated XAI:} Sure, basic Grad-CAM heatmaps look nice, but
+they aren't enough. We need rigorous, medically validated explainability that proves
+the network's spatial attention correlates directly with actual parasitological
+markers---like hemozoin pigment or chromatin dots---before clinicians will fully trust
+the output.
+\end{itemize}
+
+\begin{thebibliography}{99}
+\bibitem{who2023} World Health Organization, ``World malaria report 2023,'' Geneva,
+Switzerland, 2023.
+\bibitem{rajaraman2018} S. Rajaraman \emph{et al.}, ``Pre-trained convolutional
+neural networks as feature extractors toward improved malaria parasite detection in
+thin blood smear images,'' \emph{PeerJ}, vol.~6, p.~e4568, 2018.
+\bibitem{rajaraman2019} S. Rajaraman, S. Jaeger, and S. K. Antani, ``Performance
+evaluation of deep neural ensembles toward malaria parasite detection in thin-blood
+smear images,'' \emph{PeerJ}, vol.~7, p.~e6977, 2019.
+\bibitem{madhu2023} G. Madhu \emph{et al.}, ``Intelligent diagnostic model for malaria
+parasite detection and classification using imperative inception-based capsule neural
+networks,'' \emph{Scientific Reports}, vol.~13, no.~1, p.~13531, 2023.
+\bibitem{masud2022} M. Masud \emph{et al.}, ``Explainable Transformer-Based Deep
+Learning Model for the Detection of Malaria Parasites from Blood Cell Images,''
+\emph{Sensors}, vol.~22, no.~12, p.~4373, 2022.
+\bibitem{rahman2019} A. Rahman \emph{et al.}, ``Improving Malaria Parasite Detection
+from Red Blood Cell using Deep Convolutional Neural Networks,'' \emph{arXiv preprint}
+arXiv:1907.10418, 2019.
+\bibitem{fuhad2020} K. M. F. Fuhad \emph{et al.}, ``Deep Learning Based Automatic
+Malaria Parasite Detection from Blood Smear and its Smartphone Based Application,''
+\emph{Diagnostics}, vol.~10, no.~5, p.~329, 2020.
+\bibitem{masud2020} M. Masud \emph{et al.}, ``Leveraging Deep Learning Techniques for
+Malaria Parasite Detection Using Mobile Application,'' \emph{Wireless Communications
+and Mobile Computing}, vol.~2020, pp.~1--15, 2020.
+\bibitem{ali2025danet} A. Ali, R. Pal, I. Dey, E. Cuevas, M. Perez-Cisneros, and
+R. Sarkar, ``DANet: a lightweight dilated attention network for malaria parasite
+detection,'' \emph{Scientific Reports}, vol.~15, p.~36689, 2025.
+\bibitem{tellez2019} D. Tellez, G. Litjens, P. B\'andi, W. Bulten, J.-M. Bokhorst,
+F. Ciompi, and J. van der Laak, ``Quantifying the effects of data augmentation and
+stain color normalization in convolutional neural networks for computational
+pathology,'' \emph{Medical Image Analysis}, vol.~58, p.~101544, 2019.
+\bibitem{rajaraman2018xai} S. Rajaraman \emph{et al.}, ``Visualizing and Explaining
+Deep Learning Models for Malaria Parasite Detection,'' \emph{Medical Image
+Understanding and Analysis}, 2018.
+\bibitem{zedda2023} L. Zedda, A. Loddo, and C. Di Ruberto, ``YOLO-PAM:
+Parasite-Attention-Based Model for Efficient Malaria Detection,'' \emph{Journal of
+Imaging}, vol.~9, no.~12, p.~266, 2023.
+\bibitem{mmileng2025} T. Mmileng \emph{et al.}, ``Synthetic Data Generation and Hybrid
+Architecture Modeling for Edge-Deployed Malaria Diagnostics using ConvNeXt,''
+\emph{IEEE Access}, vol.~13, pp.~100--115, 2025.
+\end{thebibliography}
+
+\end{document}

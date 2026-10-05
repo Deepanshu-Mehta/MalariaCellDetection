@@ -1,0 +1,43 @@
+{
+ "cfg": {
+  "seed": 42,
+  "img_size": 224,
+  "base_channels": 8,
+  "batch_size": 64,
+  "epochs": 75,
+  "max_lr": 0.001,
+  "cycle_momentum": false,
+  "rotation": 15,
+  "flip_p": 0.2,
+  "split": {
+   "train": 0.7,
+   "val": 0.1,
+   "test": 0.2
+  },
+  "data_frac": 1.0,
+  "num_workers": 0,
+  "out_dir": "outputs"
+ },
+ "metrics": {
+  "ACC": 97.02467343976778,
+  "PR": 97.71723122238586,
+  "SE": 96.2989840348331,
+  "SP": 97.75036284470247,
+  "F1": 97.00292397660819,
+  "ROC_AUC": 0.9945046669517464,
+  "PR_AUC": 0.9950259742249548
+ },
+ "paper": {
+  "ACC": 97.95,
+  "PR": 97.76,
+  "SE": 98.07,
+  "SP": 97.87,
+  "F1": 97.86,
+  "ROC_AUC": 0.98,
+  "PR_AUC": 0.98
+ },
+ "params": 2310842,
+ "flops": 832536832,
+ "best_epoch": 47,
+ "test_loss": 0.08884014173022894
+}

@@ -1,0 +1,37 @@
+# --- Course instructions, guidelines and internal planning notes (not part of the submission) ---
+instruction*.txt
+**/guidlines/
+**/guidelines/
+plan.md
+PLAN.md
+*_PLAN.md
+*_plan.md
+
+# --- Claude Code files ---
+**/.claude/
+**/CLAUDE.md
+**/CLAUDE.local.md
+
+# --- Dataset (≈730 MB; download from NIH, see README) ---
+milestone2-baseline/data/
+*.zip
+
+# --- Training by-products ---
+milestone2-baseline/outputs_smoke/
+**/ckpt/last.pth
+*.log
+
+# --- LaTeX build by-products ---
+*.aux
+*.out
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+
+# --- OS / editor / Python ---
+.DS_Store
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+venv/
+.venv/
