@@ -27,9 +27,9 @@ Two recent reports bear directly on these questions. MalariaNet, evaluated witho
 latter [5]. EMFE showed that a five-feature model built on green-channel spots reached AUC .9765 on NIH under patient-grouped validation, without an external test [6]. Together they suggest that NIH scores
 overstate transfer, and that much of the NIH task may be solvable by very simple means.
 
-We reproduced DANet and audited what its score means, writing a prediction before each run from the third milestone onward, and keeping failed predictions on record. We make four contributions: (i) we measure
+We reproduced DANet and audited what its score means, writing dated predictions before most experiments, labelling the rest exploratory, and keeping failed predictions on record. We make four contributions: (i) we measure
 leakage at patient and session level; (ii) we show that a single hand-made measurement, with no training, comes close to trained models on NIH; (iii) we separate ranking from thresholding on external data, across
-retraining and across crop masks; and (iv) we test all of this once, with frozen candidates, on a dataset that played no part in development.
+retraining and across crop masks; and (iv) we test all of this once, with frozen candidates, on a dataset that played no part in fitting or choosing any model or feature.
 
 ## 2. Materials and methods
 
@@ -71,8 +71,18 @@ No model, threshold or normalisation was fitted on external data. On MP-IDB, E6b
 
 **BBBC041, one-shot.** Four candidates were frozen, with hashes recorded before scoring: (1) the dark-spot rule; (2) an E1 five-fold ensemble; (3) a colour-transfer ensemble of 15 DANets and 5 ResNet-18s; (4) DINOv2 and DinoBloom probes, as descriptive comparators. Ensembles use the mean logit, with
 decision threshold 0. BBBC041 offers boxes, not masks, so crops were made with two rules: an ellipse inscribed in the box, and Otsu thresholding of the green channel. Delta is candidate 3 minus candidate 1. AUC and balanced accuracy were co-primary, each with a 97.5% image-clustered percentile bootstrap CI (5,000
-draws). The five-way outcome rule is given in Table `[X]`. It was applied separately to each crop rule, and if they disagreed, the outcome was recorded as "depends on crop rule". This agreement requirement was added before any BBBC041 score existed, after MP-IDB rehearsal showed the crop rule alone could decide the outcome.
+draws). The five-way outcome rule is given in Table 1. It was applied separately to each crop rule, and if they disagreed, the outcome was recorded as "depends on crop rule". This agreement requirement was added before any BBBC041 score existed, after MP-IDB rehearsal showed the crop rule alone could decide the outcome.
 Scores were saved and hashed before any metric was computed. A rescore was allowed only for a failed automated integrity check.
+
+**Table 1. Outcome rule, delta = candidate 3 minus candidate 1. The first condition that holds decides.**
+
+| Order | Outcome | Condition |
+|---|---|---|
+| 1 | No transfer | AUC below .80 for both candidates |
+| 2 | Feature holds | AUC upper bound at most +.01 and BACC upper bound at most +2 |
+| 3 | Trained model wins | AUC lower bound above +.01 and BACC lower bound above +2 |
+| 4 | Ranking and threshold disagree | The AUC and BACC decisions point opposite ways |
+| 5 | Inconclusive | Anything else |
 
 ### 2.6 Statistics
 
@@ -81,7 +91,7 @@ was used as the threshold for meaningful change on NIH.
 
 ### 2.7 Predictions and corrections
 
-Predictions, with decision rules and falsification conditions, were written before each run from Milestone 3 onward, and are listed in `registry.csv`. **These dates are self-reported.** Only the Milestone 3 submission (5 October 2026) is externally dated. The repository's first research commit is 2 November 2026, and later registrations are
+Predictions, with decision rules and falsification conditions, were written before running each registered experiment, and are listed in `registry.csv`. Experiments without one, such as E8 and E1r, are reported as exploratory. An AI assistant wrote many of these predictions and proposed parts of the experimental design, and each record says so. **These dates are self-reported.** Only the Milestone 3 submission (5 October 2026) is externally dated. The repository's first research commit is 2 November 2026, and later registrations are
 local commits, not externally timestamped. Where a later check overturned a claim, the correction was added above the original text. Exploratory analyses are labelled as such.
 
 ## 3. Results
@@ -89,7 +99,7 @@ local commits, not externally timestamped. Where a later check overturned a clai
 ### 3.1 The structure of the NIH dataset
 
 Infection status is confounded with imaging date. Of 56 dates, only 4 hold both healthy and infected patients, covering 7 of 50 healthy and 27 of 150 infected patients, and 31 dates span several test folds of the grouped split. Colour follows date: among 13,665 uninfected cells, date explained 86.5% of the colour variance that patient explained, against a predicted
-minimum of 70%. Cell count alone separates infected from healthy patients with AUC .992 (exploratory), because about 68 uninfected cells were sampled per patient in both groups, so any patient-level result on natural bags must be read with care.
+minimum of 70%. Cell count alone separates infected from healthy patients with AUC .992 (exploratory), because about 68 uninfected cells were sampled per patient in both groups, so infected patients simply have more cells. Any patient-level result on natural bags must be read with care.
 
 On uninfected cells alone, frozen RedDino features separated healthy from infected patients with AUC .933. Restricted to shared dates, this fell to .767 [.519, .958], narrowly missing our prediction of below .75. With 7 healthy patients the interval is too wide to say how much of this signal is batch.
 
