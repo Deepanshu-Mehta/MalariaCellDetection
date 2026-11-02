@@ -1,6 +1,14 @@
 # E11: BBBC041 single-shot holdout
 
-**Status:** registered 2026-11-02, not scored  ·  **Outcome:** pending
+**Status:** registered 2026-11-02, amended the same day before any score, not scored  ·  **Outcome:** pending
+
+> **Amendment, 2026-11-02, decided by the authors before any BBBC041 score or metric existed.** Reason: the MP-IDB rehearsal under Protocol showed the crop rule alone
+> decides the outcome. The five-way rule below now runs twice, once on ellipse crops and once on Otsu crops, each with candidates 1 and 3 scored on those crops and its own bootstrap.
+> **If both give the same outcome, that is E11's outcome. If they differ, the outcome is "Depends on crop rule".** This overrides the "ellipse primary, Otsu sensitivity" wording below, and
+> the crop-rule check is superseded. Both score manifests are committed before either metric is calculated. Probes run on ellipse crops only and stay descriptive.
+>
+> **Addendum to prediction 1, written by the AI assistant before scoring, after seeing the rehearsal and the crop audit:** Depends on crop rule 45%, Inconclusive 20%, Feature holds 20%, Trained
+> model wins 5%, Ranking and threshold disagree 5%, No transfer 5%. The original probabilities stand as written and are the ones scored against the five-way rule.
 
 ## Question
 Does a one-feature dark-spot rule, fitted on NIH alone, hold against trained models on a new dataset, and does it keep its

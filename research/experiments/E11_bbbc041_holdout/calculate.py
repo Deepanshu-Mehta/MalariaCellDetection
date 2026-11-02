@@ -1,6 +1,8 @@
-"""Metrics and the outcome rule. Run once on BBBC041, after scores/<name>/manifest.json exists and is committed.
+"""Metrics and the outcome rule. Run once per crop rule on BBBC041, after BOTH score manifests exist and are committed.
 
-    arch -arm64 .venv/bin/python -m research.experiments.E11_bbbc041_holdout.calculate --name <run name> --labels <labels.csv>
+    arch -arm64 .venv/bin/python -m research.experiments.E11_bbbc041_holdout.calculate --name bbbc041_ellipse --labels <labels.csv>
+    arch -arm64 .venv/bin/python -m research.experiments.E11_bbbc041_holdout.calculate --name bbbc041_otsu --labels <labels.csv>
+    arch -arm64 .venv/bin/python -m research.experiments.E11_bbbc041_holdout.calculate --final
 
 `--labels` columns: crop_id, image, y (1 Parasitized, 0 Uninfected, empty for secondary-only rows), group, stage.
 """
@@ -52,6 +54,11 @@ def outcome(auc1, auc3, d_auc, d_bacc):
     return "Inconclusive"
 
 
+def combine(ellipse, otsu):
+    """Amended rule: an outcome stands only if both crop rules give it."""
+    return ellipse if ellipse == otsu else "Depends on crop rule"
+
+
 def load(name):
     out = HERE / "scores" / name
     man = json.load(open(out / "manifest.json"))
@@ -70,11 +77,21 @@ def candidates(s):
     return c
 
 
+def final_outcome():
+    r = {k: json.load(open(HERE / f"results_bbbc041_{k}.json"))["outcome"] for k in ("ellipse", "otsu")}
+    O = dict(by_crop_rule=r, outcome=combine(r["ellipse"], r["otsu"]))
+    json.dump(O, open(HERE / "results_outcome.json", "w"), indent=1)
+    print(json.dumps(O, indent=1))
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--name", required=True)
-    ap.add_argument("--labels", required=True)
+    ap.add_argument("--name")
+    ap.add_argument("--labels")
+    ap.add_argument("--final", action="store_true", help="combine the two crop rules after both have run")
     a = ap.parse_args()
+    if a.final:
+        return final_outcome()
     s, man = load(a.name)
     lab = pd.read_csv(a.labels)
     assert len(lab) == man["n"]

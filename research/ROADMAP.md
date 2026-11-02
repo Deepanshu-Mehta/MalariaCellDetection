@@ -177,7 +177,8 @@ cost ~18h against an ~9h estimate, and the week's reset is every Saturday).
 
 **Correction, 2026-11-02:** the protocol below names Otsu masks. MP-IDB rehearsal favoured an inscribed ellipse, with Otsu kept as
 a sensitivity check, subject to a registered check that trained candidates are not disadvantaged. See
-`experiments/E11_bbbc041_holdout/README.md`.
+`experiments/E11_bbbc041_holdout/README.md`. **Superseded the same day:** rehearsal showed the crop rule alone decides the outcome on MP-IDB, so the authors amended E11 before any score:
+the outcome rule runs on both crop rules, and any disagreement is reported as "Depends on crop rule".
 
 Constraints from the team: no push to a remote, and no expert review. So E7 stays "flagged, not adjudicated", and the
 paper states that prediction dates are self-reported. BBBC041 is scored once, so every candidate is frozen first.
