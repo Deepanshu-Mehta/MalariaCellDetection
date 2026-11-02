@@ -1,0 +1,2 @@
+{"name": "E4b_e1_colourtransfer", "model": "danet", "epochs": 50, "colour_transfer": true, "colour_transfer_prob": 0.5,
+ "_note": "E1 arch (softmax/cascade/InstanceNorm) + training-time Reinhard patient colour transfer. Prediction: near-zero BACC/patient-ID-probe change vs E1."}

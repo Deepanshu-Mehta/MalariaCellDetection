@@ -1,0 +1,29 @@
+{
+ "cell": {
+  "ACC": 50.77180583968756,
+  "BACC": 50.0,
+  "SE": 0.0,
+  "SP": 100.0,
+  "PR": 0.0,
+  "ECE": 0.041941491793096364,
+  "n": 5377,
+  "TP": 0,
+  "TN": 2730,
+  "FP": 0,
+  "FN": 2647,
+  "ROC_AUC": 0.5,
+  "PR_AUC": 0.49228194160312444
+ },
+ "patient": {
+  "SE_patient_macro": 0.0,
+  "SP_patient_macro": 100.0,
+  "SP_healthy_only": 100.0,
+  "SP_infected_patients": 100.0,
+  "n_patients": 40
+ },
+ "test_loss": 0.6965656729021191,
+ "best_epoch": 8,
+ "params": 2310842,
+ "train_hours": 0.9753367373678419,
+ "sec_per_epoch": 69.83395969867706
+}

@@ -1,0 +1,147 @@
+[
+ {
+  "i": 0,
+  "gpu": 0,
+  "job": {
+   "config": "E3_random_patient",
+   "split": "leaky",
+   "set": [
+    "label_draw=0"
+   ],
+   "seed": 42
+  },
+  "returncode": 0,
+  "hours": 0.6165067612462574
+ },
+ {
+  "i": 1,
+  "gpu": 1,
+  "job": {
+   "config": "E3_random_patient",
+   "split": "grouped",
+   "set": [
+    "label_draw=0"
+   ],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 0.6321629238128662
+ },
+ {
+  "i": 2,
+  "gpu": 0,
+  "job": {
+   "config": "E3_random_patient",
+   "split": "leaky",
+   "set": [
+    "label_draw=1"
+   ],
+   "seed": 42
+  },
+  "returncode": 0,
+  "hours": 0.011117430991596646
+ },
+ {
+  "i": 3,
+  "gpu": 0,
+  "job": {
+   "config": "E3_random_patient",
+   "split": "grouped",
+   "set": [
+    "label_draw=1"
+   ],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 0.009802563190460205
+ },
+ {
+  "i": 4,
+  "gpu": 1,
+  "job": {
+   "config": "E3_random_patient",
+   "split": "leaky",
+   "set": [
+    "label_draw=2"
+   ],
+   "seed": 42
+  },
+  "returncode": 0,
+  "hours": 0.00970966358979543
+ },
+ {
+  "i": 5,
+  "gpu": 0,
+  "job": {
+   "config": "E3_random_patient",
+   "split": "grouped",
+   "set": [
+    "label_draw=2"
+   ],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 0.009655138982666863
+ },
+ {
+  "i": 6,
+  "gpu": 1,
+  "job": {
+   "config": "E3_random_patient",
+   "split": "leaky",
+   "set": [
+    "label_draw=3"
+   ],
+   "seed": 42
+  },
+  "returncode": 0,
+  "hours": 0.009820645517773098
+ },
+ {
+  "i": 7,
+  "gpu": 0,
+  "job": {
+   "config": "E3_random_patient",
+   "split": "grouped",
+   "set": [
+    "label_draw=3"
+   ],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 0.009658386442396376
+ },
+ {
+  "i": 8,
+  "gpu": 1,
+  "job": {
+   "config": "E3_random_patient",
+   "split": "leaky",
+   "set": [
+    "label_draw=4"
+   ],
+   "seed": 42
+  },
+  "returncode": 0,
+  "hours": 0.009855056802431742
+ },
+ {
+  "i": 9,
+  "gpu": 0,
+  "job": {
+   "config": "E3_random_patient",
+   "split": "grouped",
+   "set": [
+    "label_draw=4"
+   ],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 0.008650221162372166
+ }
+]

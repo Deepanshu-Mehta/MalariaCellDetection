@@ -1,0 +1,41 @@
+{
+ "E1": {
+  "n_total": 963,
+  "n_true_positive": 506,
+  "accuracy_on_parasitized": 0.5254413291796469,
+  "pointing_game_rate": 0.7766798418972332,
+  "chance_area_frac": 0.14601003676544727,
+  "energy_mean": 0.4004708986339185,
+  "energy_minus_chance": 0.2544608618684712,
+  "flip_rate_parasite_inpaint": 0.9268774703557312,
+  "flip_rate_random_inpaint": 0.017786561264822136,
+  "sanity_check_mean_1_minus_corr": 0.7473982146528504,
+  "sanity_check_n_valid": 20
+ },
+ "E8b": {
+  "n_total": 963,
+  "n_true_positive": 580,
+  "accuracy_on_parasitized": 0.6022845275181724,
+  "pointing_game_rate": 0.9413793103448276,
+  "chance_area_frac": 0.14750921583611892,
+  "energy_mean": 0.3740988315050972,
+  "energy_minus_chance": 0.22658961566897826,
+  "flip_rate_parasite_inpaint": 0.9534482758620689,
+  "flip_rate_random_inpaint": 0.01896551724137931,
+  "sanity_check_mean_1_minus_corr": 0.3805814264769048,
+  "sanity_check_n_valid": 9
+ },
+ "E8c": {
+  "n_total": 963,
+  "n_true_positive": 635,
+  "accuracy_on_parasitized": 0.6593977154724818,
+  "pointing_game_rate": 0.9039370078740158,
+  "chance_area_frac": 0.14260910257311585,
+  "energy_mean": 0.3832548678214625,
+  "energy_minus_chance": 0.2406457652483467,
+  "flip_rate_parasite_inpaint": 0.9275590551181102,
+  "flip_rate_random_inpaint": 0.004724409448818898,
+  "sanity_check_mean_1_minus_corr": 1.0033815357882592,
+  "sanity_check_n_valid": 19
+ }
+}

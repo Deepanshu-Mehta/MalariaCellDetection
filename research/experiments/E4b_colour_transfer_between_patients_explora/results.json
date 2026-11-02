@@ -1,0 +1,29 @@
+{
+ "E4b_e1": {
+  "grouped_BACC": 96.78496262428334,
+  "baseline_grouped_BACC": 96.778,
+  "BACC_change": 0.006962624283332275,
+  "patient_id_probe_lr_acc": 0.24023717031281946,
+  "patient_id_probe_chance": 0.006666666666666667,
+  "baseline_probe_lr_acc": 0.2510734001226743,
+  "probe_change": -0.010836229809854853
+ },
+ "E4b_e8b": {
+  "grouped_BACC": 96.65795776181145,
+  "baseline_grouped_BACC": 96.71238841715655,
+  "BACC_change": -0.05443065534510083,
+  "patient_id_probe_lr_acc": 0.34164792475976286,
+  "patient_id_probe_chance": 0.006666666666666667,
+  "baseline_probe_lr_acc": 0.3976691883050501,
+  "probe_change": -0.05602126354528725
+ },
+ "E4b_e8c": {
+  "grouped_BACC": 96.67610131359314,
+  "baseline_grouped_BACC": 96.78496262428334,
+  "BACC_change": -0.10886131069020166,
+  "patient_id_probe_lr_acc": 0.2784706603966469,
+  "patient_id_probe_chance": 0.006666666666666667,
+  "baseline_probe_lr_acc": 0.27908403189531794,
+  "probe_change": -0.0006133714986710226
+ }
+}

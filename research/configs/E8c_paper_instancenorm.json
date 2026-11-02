@@ -1,0 +1,2 @@
+{"name": "E8c_paper_instancenorm", "model": "danet", "epochs": 50, "gate": "sigmoid", "dilation_mode": "parallel", "norm": "instance",
+ "_note": "E8b with InstanceNorm instead of LayerNorm: E8b vs E8c differ only in the norm layer. Added 2026-10-27 after E8a failed to train."}

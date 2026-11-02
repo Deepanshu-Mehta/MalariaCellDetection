@@ -11,9 +11,13 @@ change with a prediction made *before* coding, test it, then analyse and write i
 |---|---|---|
 | M1 | Literature survey (11 papers, incl. DANet) + slides | ✅ done |
 | M2 | Reproduce the base paper (DANet) | ✅ done: 97.02 % accuracy |
-| M3 | Hypothesis + prediction (before coding) + Introduction | ✅ drafted, to submit |
-| M4 | Implement the change, run ablations | ⏳ next |
+| M3 | Hypothesis + prediction (before coding) + Introduction | ✅ submitted 2026-10-05 |
+| M4 | Implement the change, run ablations | ✅ done (M3's colour-jitter hypothesis was falsified, see [Research audit](#research-audit)) |
 | M5 | Failure analysis, IEEE paper, defence | ⏳ |
+
+**Beyond the course scope:** M2's reproduction grew into an independent, pre-registered audit of DANet and of what the NIH
+benchmark measures. The target is *Computers in Biology and Medicine*. See [Research audit](#research-audit) for current
+results, `research/ROADMAP.md` for the plan, and `research/registry.csv` for every prediction, result and correction.
 
 ---
 
@@ -38,7 +42,16 @@ change with a prediction made *before* coding, test it, then analyse and write i
     ├── HYPOTHESIS.md                           # hypothesis + predictions ← M3 submission
     ├── malaria-slides-M1-M3.pdf                # full deck: M1 (15, incl. DANet) + M2/M3 (6) = 21 slides
     └── report/report.tex, report.pdf           # survey report + DANet section + the new M3 Introduction
+research/
+├── ROADMAP.md, registry.csv                    # living plan; one row per experiment: prediction, result, verdict
+├── train.py, configs/, malaria/, splits/       # shared training code, experiment configs, frozen leakage-proof splits
+├── experiments/<ID>_<name>/                    # one write-up per experiment, plus its analysis scripts and results
+├── exploratory/                                # unregistered checks, labelled as such
+├── protocols/, scripts/, kaggle/, results/     # external-data protocol, utilities, Kaggle launcher, master tables
+└── runs_kaggle/                                # per-run configs, logs and predictions (checkpoints are not tracked)
 ```
+
+Datasets, checkpoints, cached arrays, `.txt` notes, `reports/` and `research_notes/` are kept local and are not tracked.
 
 ---
 
@@ -131,6 +144,29 @@ Full reasoning: [`milestone3-hypothesis/HYPOTHESIS.md`](milestone3-hypothesis/HY
 
 ---
 
+## Research audit
+
+All predictions are written and dated before a run. Falsified results stay on the record, and corrections are added above
+the original text rather than replacing it. **Exploratory** marks anything not pre-registered.
+
+| Question | Current evidence | Experiments | Status |
+|---|---|---|---|
+| Does patient leakage inflate the score? | Barely under patient-grouped CV: gap +0.26 BACC, far below M3's prediction. Imaging sessions still cross folds | E1, E10 | Patient level done; session level pending |
+| Is DANet better than simple references? | About equal to ResNet-18; frozen foundation-model probes reach 96.0-96.5 BACC vs 96.8 | E1r, E9 | Done |
+| Does ColorJitter help on unseen patients? | No: M3's hypothesis is falsified by its own rule | E4 | Done |
+| Does the norm layer change leakage use? | LayerNorm gap +0.63 vs InstanceNorm +0.02 | E8 | Exploratory, needs replication |
+| Is any architecture more robust on MP-IDB? | No robust ranking across 5 checkpoints per arm; BACC SD 5.3-8.4 between folds | E6, E6b | Done; E6's original ranking withdrawn |
+| Does colour invariance help externally? | Training-time colour transfer: BACC +7.05, AUC +0.059. Test-time Reinhard normalisation harmed all arms | E6c | Done |
+| Are explanations trustworthy? | They land on annotated parasites, but so does a darkest-pixel rule | E5 | Narrowed; NIH question open |
+| Are the labels noisy? | 312 cells (1.13%) flagged; some sit in healthy-only patients | E7 | Needs expert review |
+| How far does one hand-made feature go? | NIH AUC .981; MP-IDB AUC .987. Worse than DANet on NIH healthy patients (false positives about 3.6% vs 2.0%) | exploratory | Needs BBBC041 |
+
+**Dataset caveats found so far:** cell count alone separates infected from healthy-only patients (AUC .992), because every
+patient has about 68 uninfected cells. Infection status is also heavily confounded with imaging date: only 7 of 50
+healthy-only patients share a date with any infected patient. Both are exploratory findings.
+
+---
+
 ## How to run
 
 **Environment:** Python ≥ 3.10, `torch` ≥ 2.0, `torchvision`, `numpy`, `pandas`, `scikit-learn`, `matplotlib`, `Pillow`, `jupyter`
@@ -156,8 +192,10 @@ DANET_SMOKE=1 jupyter nbconvert --to notebook --execute danet_baseline.ipynb --o
 
 ## Limitations
 
-There is a single public dataset from a single hospital and no external validation. The M2 numbers come from one seed on a leaky cell-level split.
-This is a research reproduction: **no clinical claims** are made.
+NIH is one public dataset from one hospital. The M2 numbers come from one seed on a leaky cell-level split, and the M2
+findings above are the original notes: `research/` revises several of them, including findings 4 and 5. MP-IDB has been
+reused across experiments, so BBBC041 is reserved as the clean external test. This is a research reproduction:
+**no clinical claims** are made.
 
 ## References
 - A. Ali *et al.*, "DANet: a lightweight dilated attention network for malaria parasite detection," *Sci. Rep.*, 15:36689, 2025.

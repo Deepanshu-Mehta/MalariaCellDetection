@@ -1,0 +1,318 @@
+[
+ {
+  "i": 0,
+  "gpu": 0,
+  "job": {
+   "config": "E1_danet",
+   "split": "m3",
+   "set": [
+    "epochs=75"
+   ],
+   "seed": 0
+  },
+  "returncode": 0,
+  "hours": 1.473970696263843
+ },
+ {
+  "i": 1,
+  "gpu": 1,
+  "job": {
+   "config": "E1_danet",
+   "split": "m3",
+   "set": [
+    "epochs=75"
+   ],
+   "seed": 1
+  },
+  "returncode": 0,
+  "hours": 1.6318366904391184
+ },
+ {
+  "i": 2,
+  "gpu": 0,
+  "job": {
+   "config": "E1_danet",
+   "split": "m3",
+   "set": [
+    "epochs=75"
+   ],
+   "seed": 2
+  },
+  "returncode": 0,
+  "hours": 1.4341349630223381
+ },
+ {
+  "i": 3,
+  "gpu": 1,
+  "job": {
+   "config": "E4_colourjitter",
+   "split": "m3",
+   "set": [
+    "epochs=75"
+   ],
+   "seed": 0
+  },
+  "returncode": 0,
+  "hours": 3.1202561824851567
+ },
+ {
+  "i": 4,
+  "gpu": 0,
+  "job": {
+   "config": "E4_colourjitter",
+   "split": "m3",
+   "set": [
+    "epochs=75"
+   ],
+   "seed": 1
+  },
+  "returncode": 0,
+  "hours": 3.3451613015598722
+ },
+ {
+  "i": 5,
+  "gpu": 1,
+  "job": {
+   "config": "E4_colourjitter",
+   "split": "m3",
+   "set": [
+    "epochs=75"
+   ],
+   "seed": 2
+  },
+  "returncode": 0,
+  "hours": 3.09649066819085
+ },
+ {
+  "i": 6,
+  "gpu": 0,
+  "job": {
+   "config": "E4_colourjitter",
+   "split": "leaky",
+   "set": [
+    "epochs=75"
+   ],
+   "seed": 42
+  },
+  "returncode": 0,
+  "hours": 3.1686340144607756
+ },
+ {
+  "i": 7,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 1
+  },
+  "returncode": 0,
+  "hours": 0.1376188317934672
+ },
+ {
+  "i": 8,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 2
+  },
+  "returncode": 0,
+  "hours": 0.13587850544187757
+ },
+ {
+  "i": 9,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 3
+  },
+  "returncode": 0,
+  "hours": 0.1375366061925888
+ },
+ {
+  "i": 10,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 4
+  },
+  "returncode": 0,
+  "hours": 0.13798240813944074
+ },
+ {
+  "i": 11,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 1,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 0.13508020798365275
+ },
+ {
+  "i": 12,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 1,
+   "fold": 1
+  },
+  "returncode": 0,
+  "hours": 0.13868982056776682
+ },
+ {
+  "i": 13,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 1,
+   "fold": 2
+  },
+  "returncode": 0,
+  "hours": 0.13910564614666832
+ },
+ {
+  "i": 14,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 1,
+   "fold": 3
+  },
+  "returncode": 0,
+  "hours": 0.14132749954859417
+ },
+ {
+  "i": 15,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 1,
+   "fold": 4
+  },
+  "returncode": 0,
+  "hours": 0.13825774550437928
+ },
+ {
+  "i": 16,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 2,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 0.14056480010350544
+ },
+ {
+  "i": 17,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 2,
+   "fold": 1
+  },
+  "returncode": 0,
+  "hours": 0.13708843410015106
+ },
+ {
+  "i": 18,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 2,
+   "fold": 2
+  },
+  "returncode": 0,
+  "hours": 0.13684033844206067
+ },
+ {
+  "i": 19,
+  "gpu": 0,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 2,
+   "fold": 3
+  },
+  "returncode": 0,
+  "hours": 0.14052737414836883
+ },
+ {
+  "i": 20,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 2,
+   "fold": 4
+  },
+  "returncode": 0,
+  "hours": 0.13704714046584235
+ },
+ {
+  "i": 21,
+  "gpu": 0,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "leaky",
+   "set": [],
+   "seed": 42
+  },
+  "returncode": 0,
+  "hours": 0.137468205359247
+ },
+ {
+  "i": 22,
+  "gpu": 1,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "leaky",
+   "set": [],
+   "seed": 43
+  },
+  "returncode": 0,
+  "hours": 0.13755944523546432
+ },
+ {
+  "i": 23,
+  "gpu": 0,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "leaky",
+   "set": [],
+   "seed": 44
+  },
+  "returncode": 0,
+  "hours": 0.1227194846338696
+ }
+]

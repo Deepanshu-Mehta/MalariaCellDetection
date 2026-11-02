@@ -1,0 +1,30 @@
+[
+ {
+  "job": {
+   "config": "E1_danet",
+   "split": "grouped",
+   "set": [
+    "epochs=1",
+    "data_frac=0.05"
+   ],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 0.01871829350789388
+ },
+ {
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [
+    "epochs=1",
+    "data_frac=0.05"
+   ],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 0.002958821786774529
+ }
+]

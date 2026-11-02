@@ -1,0 +1,1 @@
+{"name": "E8_paper_faithful", "model": "danet", "epochs": 50, "gate": "sigmoid", "dilation_mode": "parallel", "norm": "layer", "_note": "E8b: DANet as described in the paper text (Eq. 1 parallel dilations, Eq. 3 sigmoid gate, LN). LayerNorm = GroupNorm(1, C)."}

@@ -1,0 +1,2 @@
+{"name": "E3_random_patient", "model": "danet", "epochs": 30, "label_mode": "random_patient",
+ "_note": "Permutation null: one random label per patient (cell-balanced). Vary label_draw 0-4 via --set."}

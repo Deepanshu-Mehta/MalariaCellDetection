@@ -1,0 +1,1 @@
+{"name": "E1_danet", "model": "danet", "epochs": 50, "_note": "Frozen M2 config except epochs (75 -> 50, set after Phase 0 timing). Run on leaky seeds 42-44 and grouped r0-2 f0-4."}

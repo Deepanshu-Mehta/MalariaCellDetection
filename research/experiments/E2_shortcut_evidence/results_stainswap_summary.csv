@@ -1,0 +1,16 @@
+arm,patient_type,label,condition,mean,size
+E1,healthy,0,control,0.023,1000
+E1,healthy,0,cross_type,0.033,1000
+E1,infected,0,control,0.051,3000
+E1,infected,0,cross_type,0.03,3000
+E1,infected,1,control,0.269,2417
+E8b,healthy,0,control,0.025,1000
+E8b,healthy,0,cross_type,0.031,1000
+E8b,infected,0,control,0.05,3000
+E8b,infected,0,cross_type,0.029,3000
+E8b,infected,1,control,0.273,2417
+E8c,healthy,0,control,0.029,1000
+E8c,healthy,0,cross_type,0.037,1000
+E8c,infected,0,control,0.05,3000
+E8c,infected,0,cross_type,0.028,3000
+E8c,infected,1,control,0.302,2417

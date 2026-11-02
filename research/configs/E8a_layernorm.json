@@ -1,0 +1,2 @@
+{"name": "E8a_layernorm", "model": "danet", "epochs": 50, "norm": "layer",
+ "_note": "Single change vs E1_danet: InstanceNorm -> LayerNorm (GroupNorm(1, C)). Isolates the norm layer."}

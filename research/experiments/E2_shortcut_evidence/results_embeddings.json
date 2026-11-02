@@ -1,0 +1,56 @@
+{
+ "E1": {
+  "patient_id_probe_infected_patients": {
+   "n_patients": 150,
+   "n_train": 19252,
+   "n_test": 4891,
+   "chance": 0.006666666666666667,
+   "lr_acc": 0.2510734001226743,
+   "knn_acc": 0.15845430382334902
+  },
+  "patient_id_probe_all_patients": {
+   "n_patients": 200,
+   "n_train": 21968,
+   "n_test": 5590,
+   "chance": 0.005,
+   "lr_acc": 0.21967799642218247,
+   "knn_acc": 0.13559928443649374
+  }
+ },
+ "E8b": {
+  "patient_id_probe_infected_patients": {
+   "n_patients": 150,
+   "n_train": 19252,
+   "n_test": 4891,
+   "chance": 0.006666666666666667,
+   "lr_acc": 0.3976691883050501,
+   "knn_acc": 0.28031077489266
+  },
+  "patient_id_probe_all_patients": {
+   "n_patients": 200,
+   "n_train": 21968,
+   "n_test": 5590,
+   "chance": 0.005,
+   "lr_acc": 0.3699463327370304,
+   "knn_acc": 0.24400715563506262
+  }
+ },
+ "E8c": {
+  "patient_id_probe_infected_patients": {
+   "n_patients": 150,
+   "n_train": 19252,
+   "n_test": 4891,
+   "chance": 0.006666666666666667,
+   "lr_acc": 0.27908403189531794,
+   "knn_acc": 0.15865876098957268
+  },
+  "patient_id_probe_all_patients": {
+   "n_patients": 200,
+   "n_train": 21968,
+   "n_test": 5590,
+   "chance": 0.005,
+   "lr_acc": 0.24311270125223614,
+   "knn_acc": 0.13023255813953488
+  }
+ }
+}

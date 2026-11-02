@@ -1,0 +1,188 @@
+{
+ "A_composition": {
+  "patients": 200,
+  "infected": 150,
+  "healthy_only": 50,
+  "cells_per_patient_quartiles": [
+   65.0,
+   70.0,
+   85.5,
+   131.25,
+   702.0
+  ],
+  "infected_cells_per_patient_quartiles": [
+   68.0,
+   81.25,
+   102.5,
+   166.25,
+   702.0
+  ],
+  "healthy_cells_per_patient_quartiles": [
+   65.0,
+   68.0,
+   68.0,
+   69.0,
+   71.0
+  ],
+  "parasitised_frac_in_infected_quartiles": [
+   0.014,
+   0.158,
+   0.328,
+   0.583,
+   0.902
+  ],
+  "uninfected_cells_in_infected_patients": 10364
+ },
+ "B_natural_bag_E1": {
+  "AUC_mean_p": [
+   0.9771,
+   0.9531,
+   0.9947
+  ],
+  "AUC_frac_pos": [
+   0.9811,
+   0.9614,
+   0.9949
+  ],
+  "lowest_infected_frac_pos": 0.0,
+  "highest_healthy_frac_pos": 0.16176470588235295,
+  "cell_FPR_healthy_only_pct": 1.962,
+  "cell_FPR_uninfected_in_infected_pct": 2.615,
+  "healthy_patient_FPR_quartiles_pct": [
+   0.0,
+   1.46,
+   4.36,
+   16.18
+  ]
+ },
+ "C_parasite_free": {
+  "n_uninfected_cells_after_E7_filter": 13665,
+  "colour_RGB_means": [
+   0.8171,
+   0.7403,
+   0.8867
+  ],
+  "dinov2_s": [
+   0.9136,
+   0.8525,
+   0.9655
+  ],
+  "reddino_s": [
+   0.9332,
+   0.8803,
+   0.9745
+  ],
+  "E1_mean_p": [
+   0.6663,
+   0.5775,
+   0.7481
+  ]
+ },
+ "E6_rows": {
+  "n": 14468,
+  "label_values": "{('Parasitized', 1): 963, ('Uninfected', 0): 13505}",
+  "excluded": "{}"
+ },
+ "E6_AUC": {
+  "n_images": 104,
+  "auc": {
+   "E1": 0.8673,
+   "E8b": 0.8913,
+   "E8c": 0.8797
+  },
+  "paired": {
+   "E8b-E1": [
+    0.0239,
+    0.0027,
+    0.0458
+   ],
+   "E8c-E1": [
+    0.0124,
+    -0.0104,
+    0.0342
+   ],
+   "E8b-E8c": [
+    0.0115,
+    -0.0098,
+    0.0336
+   ]
+  }
+ },
+ "bag_size": {
+  "healthy_n_quartiles": [
+   65.0,
+   68.0,
+   68.0,
+   69.0,
+   71.0
+  ],
+  "infected_n_quartiles": [
+   68.0,
+   81.25,
+   102.5,
+   166.25,
+   702.0
+  ],
+  "AUC_cell_count_alone": 0.9922,
+  "infected_patients_under_100_cells": 72,
+  "uninfected_cells_only_healthy_quartiles": [
+   65.0,
+   68.0,
+   71.0
+  ],
+  "AUC_uninfected_cell_count_alone": 0.5317,
+  "uninfected_count_infected_quartiles": [
+   63.0,
+   67.25,
+   68.0,
+   70.0,
+   134.0
+  ]
+ },
+ "date": {
+  "cells_without_date": 0,
+  "unique_dates": 56,
+  "patients_with_multiple_dates": 6,
+  "healthy_dates": 13,
+  "infected_dates": 47,
+  "shared_dates": 4,
+  "healthy_range": [
+   "20150604",
+   "20151207"
+  ],
+  "infected_range": [
+   "20150601",
+   "20151203"
+  ],
+  "healthy_patients_on_shared_dates": 7,
+  "infected_patients_on_shared_dates": 27,
+  "patients_per_date_quartiles": [
+   1.0,
+   2.0,
+   8.5,
+   14.0
+  ],
+  "dates_spanning_multiple_test_folds": "31/56"
+ },
+ "id_pattern_by_group": "{0: {'C#AP#thinF': 0, 'C#BP#_thinF': 0, 'C#NThinF': 7, 'C#NthinF': 1, 'C#P#NThinF': 0, 'C#P#N_ThinF': 0, 'C#P#ReThinF': 0, 'C#P#ThinF': 0, 'C#P#_ThinF': 0, 'C#P#thinF': 0, 'C#P#thinF_original': 0, 'C#P#thinOriginalOlympusCX#': 0, 'C#P#thin_original': 0, 'C#ThinF': 39, 'C#_thinF': 1, 'C#thin_original': 2}, 1: {'C#AP#thinF': 1, 'C#BP#_thinF': 1, 'C#NThinF': 0, 'C#NthinF': 0, 'C#P#NThinF': 11, 'C#P#N_ThinF': 9, 'C#P#ReThinF': 1, 'C#P#ThinF': 104, 'C#P#_ThinF': 6, 'C#P#thinF': 13, 'C#P#thinF_original': 2, 'C#P#thinOriginalOlympusCX#': 1, 'C#P#thin_original': 1, 'C#ThinF': 0, 'C#_thinF': 0, 'C#thin_original': 0}}",
+ "E_ERF_px_at_224": {
+  "E1": {
+   "r50_mean": 65.7,
+   "r50_sd": 6.8,
+   "r90_mean": 107.7,
+   "r90_sd": 3.4
+  },
+  "E8b": {
+   "r50_mean": 66.2,
+   "r50_sd": 4.2,
+   "r90_mean": 104.5,
+   "r90_sd": 1.2
+  },
+  "E8c": {
+   "r50_mean": 56.1,
+   "r50_sd": 4.1,
+   "r90_mean": 101.6,
+   "r90_sd": 0.8
+  }
+ }
+}

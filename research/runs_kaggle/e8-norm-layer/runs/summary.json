@@ -1,0 +1,204 @@
+[
+ {
+  "i": 0,
+  "gpu": 0,
+  "job": {
+   "config": "E8a_layernorm",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 1.0083772896395788
+ },
+ {
+  "i": 1,
+  "gpu": 1,
+  "job": {
+   "config": "E8a_layernorm",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 1
+  },
+  "returncode": 0,
+  "hours": 1.0223726744121975
+ },
+ {
+  "i": 2,
+  "gpu": 0,
+  "job": {
+   "config": "E8a_layernorm",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 2
+  },
+  "returncode": 0,
+  "hours": 0.9635580903291703
+ },
+ {
+  "i": 3,
+  "gpu": 1,
+  "job": {
+   "config": "E8a_layernorm",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 3
+  },
+  "returncode": 0,
+  "hours": 1.0151262907187144
+ },
+ {
+  "i": 4,
+  "gpu": 0,
+  "job": {
+   "config": "E8a_layernorm",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 4
+  },
+  "returncode": 0,
+  "hours": 0.9756578309668436
+ },
+ {
+  "i": 5,
+  "gpu": 1,
+  "job": {
+   "config": "E8a_layernorm",
+   "split": "leaky",
+   "set": [],
+   "seed": 42
+  },
+  "returncode": 0,
+  "hours": 0.9732113320297665
+ },
+ {
+  "i": 6,
+  "gpu": 0,
+  "job": {
+   "config": "E8a_layernorm",
+   "split": "leaky",
+   "set": [],
+   "seed": 43
+  },
+  "returncode": 0,
+  "hours": 0.9676511050595178
+ },
+ {
+  "i": 7,
+  "gpu": 1,
+  "job": {
+   "config": "E8a_layernorm",
+   "split": "leaky",
+   "set": [],
+   "seed": 44
+  },
+  "returncode": 0,
+  "hours": 0.9850064408116871
+ },
+ {
+  "i": 8,
+  "gpu": 0,
+  "job": {
+   "config": "E8_paper_faithful",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 1.0005397446288002
+ },
+ {
+  "i": 9,
+  "gpu": 1,
+  "job": {
+   "config": "E8_paper_faithful",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 1
+  },
+  "returncode": 0,
+  "hours": 1.0185326821936502
+ },
+ {
+  "i": 10,
+  "gpu": 0,
+  "job": {
+   "config": "E8_paper_faithful",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 2
+  },
+  "returncode": 0,
+  "hours": 0.9718270073334376
+ },
+ {
+  "i": 11,
+  "gpu": 1,
+  "job": {
+   "config": "E8_paper_faithful",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 3
+  },
+  "returncode": 0,
+  "hours": 1.0106245456801521
+ },
+ {
+  "i": 12,
+  "gpu": 0,
+  "job": {
+   "config": "E8_paper_faithful",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 4
+  },
+  "returncode": 0,
+  "hours": 0.9866795057058334
+ },
+ {
+  "i": 13,
+  "gpu": 1,
+  "job": {
+   "config": "E8_paper_faithful",
+   "split": "leaky",
+   "set": [],
+   "seed": 42
+  },
+  "returncode": 0,
+  "hours": 0.9942926208840476
+ },
+ {
+  "i": 14,
+  "gpu": 0,
+  "job": {
+   "config": "E8_paper_faithful",
+   "split": "leaky",
+   "set": [],
+   "seed": 43
+  },
+  "returncode": 0,
+  "hours": 0.9807182993491491
+ },
+ {
+  "i": 15,
+  "gpu": 1,
+  "job": {
+   "config": "E8_paper_faithful",
+   "split": "leaky",
+   "set": [],
+   "seed": 44
+  },
+  "returncode": 0,
+  "hours": 0.9829106058677037
+ }
+]

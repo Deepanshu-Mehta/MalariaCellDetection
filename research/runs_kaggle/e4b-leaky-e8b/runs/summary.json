@@ -1,0 +1,14 @@
+[
+ {
+  "i": 0,
+  "gpu": 0,
+  "job": {
+   "config": "E4b_e8b_colourtransfer",
+   "split": "leaky",
+   "set": [],
+   "seed": 42
+  },
+  "returncode": 0,
+  "hours": 0.8887904761897193
+ }
+]

@@ -1,0 +1,137 @@
+{
+ "B1_per_seed": {
+  "m3_s0_t0": {
+   "BACC": 96.422,
+   "SE": 94.371,
+   "SP": 98.473,
+   "AUC": 0.994
+  },
+  "m3_s1_t0": {
+   "BACC": 97.387,
+   "SE": 97.039,
+   "SP": 97.734,
+   "AUC": 0.995
+  },
+  "m3_s2_t0": {
+   "BACC": 96.591,
+   "SE": 96.832,
+   "SP": 96.349,
+   "AUC": 0.992
+  }
+ },
+ "H_per_seed": {
+  "m3_s0_t0": {
+   "BACC": 96.612,
+   "SE": 94.788,
+   "SP": 98.436,
+   "AUC": 0.994
+  },
+  "m3_s1_t0": {
+   "BACC": 97.504,
+   "SE": 96.58,
+   "SP": 98.428,
+   "AUC": 0.996
+  },
+  "m3_s2_t0": {
+   "BACC": 96.041,
+   "SE": 96.77,
+   "SP": 95.311,
+   "AUC": 0.992
+  }
+ },
+ "table": {
+  "B0": {
+   "BACC": 97.025,
+   "SE": 96.299,
+   "SP": 97.75,
+   "AUC": 0.995
+  },
+  "C": {
+   "BACC": 96.843,
+   "SE": 95.718,
+   "SP": 97.968,
+   "AUC": 0.994
+  },
+  "B1": {
+   "BACC": 96.8,
+   "SE": 96.081,
+   "SP": 97.519,
+   "AUC": 0.994
+  },
+  "B1_sd": {
+   "BACC": 0.515,
+   "SE": 1.485,
+   "SP": 1.078,
+   "AUC": 0.002
+  },
+  "H": {
+   "BACC": 96.719,
+   "SE": 96.046,
+   "SP": 97.392,
+   "AUC": 0.994
+  },
+  "H_sd": {
+   "BACC": 0.738,
+   "SE": 1.094,
+   "SP": 1.802,
+   "AUC": 0.002
+  }
+ },
+ "H_minus_B1_SE": {
+  "diff": 0.0555,
+  "lo": -0.169,
+  "hi": 0.2937,
+  "se": 0.1165,
+  "predicted_range": [
+   0.5,
+   1.5
+  ]
+ },
+ "H_minus_B1_BACC": {
+  "diff": -0.0387,
+  "lo": -0.2214,
+  "hi": 0.1405,
+  "se": 0.092,
+  "predicted_range": [
+   0.3,
+   1.0
+  ]
+ },
+ "H_minus_B1_AUC": {
+  "diff": -0.0003,
+  "lo": -0.0012,
+  "hi": 0.0005,
+  "se": 0.0004,
+  "predicted_range": [
+   0.001,
+   0.004
+  ]
+ },
+ "C_minus_B0_BACC": {
+  "diff": -0.1814,
+  "lo": -0.5949,
+  "hi": 0.2106,
+  "se": 0.207
+ },
+ "B1_minus_B0_BACC_unpaired": -0.225,
+ "C_minus_B0_SE": {
+  "diff": -0.5806,
+  "lo": -1.2987,
+  "hi": 0.036,
+  "se": 0.3393
+ },
+ "B1_minus_B0_SE_unpaired": -0.218,
+ "C_minus_B0_SP": {
+  "diff": 0.2177,
+  "lo": -0.2954,
+  "hi": 0.7579,
+  "se": 0.2663
+ },
+ "B1_minus_B0_SP_unpaired": -0.232,
+ "decision": {
+  "falsified": true,
+  "rule": "falsified if H <= B1 on SE and BACC averaged over the 3 splits (M3, 2026-10-05)",
+  "between_split_sd_shrinks": false,
+  "control_within_0p3": true
+ }
+}

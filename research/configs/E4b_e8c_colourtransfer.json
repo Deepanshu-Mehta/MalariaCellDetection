@@ -1,0 +1,3 @@
+{"name": "E4b_e8c_colourtransfer", "model": "danet", "epochs": 50, "gate": "sigmoid", "dilation_mode": "parallel", "norm": "instance",
+ "colour_transfer": true, "colour_transfer_prob": 0.5,
+ "_note": "E8c arch (sigmoid/parallel/InstanceNorm) + training-time Reinhard patient colour transfer. Prediction: near-zero change vs E8c."}

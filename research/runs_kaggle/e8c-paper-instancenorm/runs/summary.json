@@ -1,0 +1,103 @@
+[
+ {
+  "i": 0,
+  "gpu": 0,
+  "job": {
+   "config": "E8c_paper_instancenorm",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 1.0994450107547973
+ },
+ {
+  "i": 1,
+  "gpu": 1,
+  "job": {
+   "config": "E8c_paper_instancenorm",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 1
+  },
+  "returncode": 0,
+  "hours": 1.1202563124232823
+ },
+ {
+  "i": 2,
+  "gpu": 0,
+  "job": {
+   "config": "E8c_paper_instancenorm",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 2
+  },
+  "returncode": 0,
+  "hours": 1.0693074044916364
+ },
+ {
+  "i": 3,
+  "gpu": 1,
+  "job": {
+   "config": "E8c_paper_instancenorm",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 3
+  },
+  "returncode": 0,
+  "hours": 1.0951140940851636
+ },
+ {
+  "i": 4,
+  "gpu": 0,
+  "job": {
+   "config": "E8c_paper_instancenorm",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 4
+  },
+  "returncode": 0,
+  "hours": 1.0780193897088368
+ },
+ {
+  "i": 5,
+  "gpu": 1,
+  "job": {
+   "config": "E8c_paper_instancenorm",
+   "split": "leaky",
+   "set": [],
+   "seed": 42
+  },
+  "returncode": 0,
+  "hours": 1.0807833887471092
+ },
+ {
+  "i": 6,
+  "gpu": 0,
+  "job": {
+   "config": "E8c_paper_instancenorm",
+   "split": "leaky",
+   "set": [],
+   "seed": 43
+  },
+  "returncode": 0,
+  "hours": 1.0866635310649873
+ },
+ {
+  "i": 7,
+  "gpu": 1,
+  "job": {
+   "config": "E8c_paper_instancenorm",
+   "split": "leaky",
+   "set": [],
+   "seed": 44
+  },
+  "returncode": 0,
+  "hours": 1.0890406586726507
+ }
+]

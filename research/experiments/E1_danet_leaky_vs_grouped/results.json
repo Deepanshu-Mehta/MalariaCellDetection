@@ -1,0 +1,107 @@
+{
+ "grouped_per_repeat": {
+  "0": {
+   "BACC": 96.778,
+   "SE": 96.008,
+   "SP": 97.547,
+   "AUC": 0.992,
+   "SP_healthy_only": 98.038,
+   "SP_infected_patients": 97.385
+  },
+  "1": {
+   "BACC": 96.625,
+   "SE": 95.878,
+   "SP": 97.373,
+   "AUC": 0.992,
+   "SP_healthy_only": 97.892,
+   "SP_infected_patients": 97.202
+  },
+  "2": {
+   "BACC": 96.72,
+   "SE": 95.841,
+   "SP": 97.598,
+   "AUC": 0.993,
+   "SP_healthy_only": 98.302,
+   "SP_infected_patients": 97.366
+  }
+ },
+ "grouped_mean": {
+  "BACC": 96.708,
+  "SE": 95.909,
+  "SP": 97.506,
+  "AUC": 0.992,
+  "SP_healthy_only": 98.077,
+  "SP_infected_patients": 97.318
+ },
+ "grouped_sd": {
+  "BACC": 0.077,
+  "SE": 0.088,
+  "SP": 0.118,
+  "AUC": 0.0,
+  "SP_healthy_only": 0.208,
+  "SP_infected_patients": 0.101
+ },
+ "grouped_bacc_ci_repeat0": [
+  96.18,
+  97.29
+ ],
+ "leaky_per_seed": {
+  "leaky_s42_t0": {
+   "BACC": 96.734,
+   "SE": 95.9,
+   "SP": 97.569,
+   "AUC": 0.993,
+   "SP_healthy_only": 97.973,
+   "SP_infected_patients": 97.377
+  },
+  "leaky_s43_t0": {
+   "BACC": 97.097,
+   "SE": 96.444,
+   "SP": 97.75,
+   "AUC": 0.994,
+   "SP_healthy_only": 98.603,
+   "SP_infected_patients": 97.364
+  },
+  "leaky_s44_t0": {
+   "BACC": 97.061,
+   "SE": 96.408,
+   "SP": 97.714,
+   "AUC": 0.994,
+   "SP_healthy_only": 98.497,
+   "SP_infected_patients": 97.356
+  }
+ },
+ "leaky_mean": {
+  "BACC": 96.964,
+  "SE": 96.251,
+  "SP": 97.678,
+  "AUC": 0.994,
+  "SP_healthy_only": 98.358,
+  "SP_infected_patients": 97.366
+ },
+ "leaky_sd": {
+  "BACC": 0.2,
+  "SE": 0.304,
+  "SP": 0.096,
+  "AUC": 0.001,
+  "SP_healthy_only": 0.337,
+  "SP_infected_patients": 0.011
+ },
+ "leaky_bacc_ci_seed42": [
+  96.04,
+  97.38
+ ],
+ "gap_leaky_minus_grouped": {
+  "BACC": 0.257,
+  "SE": 0.341,
+  "SP": 0.172,
+  "AUC": 0.001,
+  "SP_healthy_only": 0.281,
+  "SP_infected_patients": 0.048
+ },
+ "aa_test": {
+  "observed_diff": 0.152,
+  "se": 0.103,
+  "mde_bacc_pp": 0.29
+ }
+}

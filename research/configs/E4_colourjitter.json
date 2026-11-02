@@ -1,0 +1,2 @@
+{"name": "E4_colourjitter", "model": "danet", "epochs": 50, "colour_jitter": [0.1, 0.1, 0.5, 0.1],
+ "_note": "M3 pre-registered hypothesis H (and control C on the leaky split). Only change vs E1_danet."}

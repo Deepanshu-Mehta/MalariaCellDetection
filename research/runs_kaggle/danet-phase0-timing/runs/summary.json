@@ -1,0 +1,41 @@
+[
+ {
+  "i": 0,
+  "gpu": 0,
+  "job": {
+   "config": "E1_danet",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 1.4047528376181921
+ },
+ {
+  "i": 1,
+  "gpu": 1,
+  "job": {
+   "config": "E1_danet",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 1
+  },
+  "returncode": 0,
+  "hours": 1.4181995891200172
+ },
+ {
+  "i": 2,
+  "gpu": 0,
+  "job": {
+   "config": "E1r_resnet18",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 0.11639554844962226
+ }
+]

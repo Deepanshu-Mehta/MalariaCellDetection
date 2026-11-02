@@ -1,0 +1,3 @@
+{"name": "E4b_e8b_colourtransfer", "model": "danet", "epochs": 50, "gate": "sigmoid", "dilation_mode": "parallel", "norm": "layer",
+ "colour_transfer": true, "colour_transfer_prob": 0.5,
+ "_note": "E8b arch (sigmoid/parallel/LayerNorm) + training-time Reinhard patient colour transfer. Prediction: modest leakage-gap and patient-ID-probe reduction vs E8b."}

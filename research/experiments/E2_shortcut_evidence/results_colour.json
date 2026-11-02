@@ -1,0 +1,18 @@
+{
+ "A_colour_only_label_classifier": {
+  "all_cells": {
+   "BACC": 63.981421002975544,
+   "SE": 57.93598954931417,
+   "SP": 70.02685245663692
+  },
+  "note": "RGB/S/H means include parasite chromatin colour for Parasitized cells (no NIH parasite mask)."
+ },
+ "B_healthy_only_vs_infected_patient_colour_probe": {
+  "n_uninfected_cells": 13779,
+  "base_rate_healthy_only": 0.24784091733797808,
+  "BACC": 78.20495882526122,
+  "SE": 64.97803806734993,
+  "SP": 91.43187958317252,
+  "note": "Uninfected cells only, so no parasite-colour confound. BACC > 50 means a red cell's colour alone can place its patient in the healthy-only vs infected-patient group."
+ }
+}

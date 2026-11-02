@@ -1,0 +1,197 @@
+[
+ {
+  "i": 0,
+  "gpu": 0,
+  "job": {
+   "config": "E4b_e1_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 1.2200311254792744
+ },
+ {
+  "i": 1,
+  "gpu": 1,
+  "job": {
+   "config": "E4b_e1_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 1
+  },
+  "returncode": 0,
+  "hours": 1.2148723025454415
+ },
+ {
+  "i": 2,
+  "gpu": 1,
+  "job": {
+   "config": "E4b_e1_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 2
+  },
+  "returncode": 0,
+  "hours": 1.168233270711369
+ },
+ {
+  "i": 3,
+  "gpu": 0,
+  "job": {
+   "config": "E4b_e1_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 3
+  },
+  "returncode": 0,
+  "hours": 1.2003313793076409
+ },
+ {
+  "i": 4,
+  "gpu": 1,
+  "job": {
+   "config": "E4b_e1_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 4
+  },
+  "returncode": 0,
+  "hours": 1.1744034100903404
+ },
+ {
+  "i": 5,
+  "gpu": 0,
+  "job": {
+   "config": "E4b_e8b_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 1.1894818159606722
+ },
+ {
+  "i": 6,
+  "gpu": 1,
+  "job": {
+   "config": "E4b_e8b_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 1
+  },
+  "returncode": 0,
+  "hours": 1.1911558885706797
+ },
+ {
+  "i": 7,
+  "gpu": 0,
+  "job": {
+   "config": "E4b_e8b_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 2
+  },
+  "returncode": 0,
+  "hours": 1.1553200260135863
+ },
+ {
+  "i": 8,
+  "gpu": 1,
+  "job": {
+   "config": "E4b_e8b_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 3
+  },
+  "returncode": 0,
+  "hours": 1.1923859153853522
+ },
+ {
+  "i": 9,
+  "gpu": 0,
+  "job": {
+   "config": "E4b_e8b_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 4
+  },
+  "returncode": 0,
+  "hours": 1.1782579820685917
+ },
+ {
+  "i": 10,
+  "gpu": 1,
+  "job": {
+   "config": "E4b_e8c_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 1.2209251241551504
+ },
+ {
+  "i": 11,
+  "gpu": 0,
+  "job": {
+   "config": "E4b_e8c_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 1
+  },
+  "returncode": 0,
+  "hours": 1.2169433326191372
+ },
+ {
+  "i": 12,
+  "gpu": 0,
+  "job": {
+   "config": "E4b_e8c_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 2
+  },
+  "returncode": 0,
+  "hours": 1.1754484596517352
+ },
+ {
+  "i": 13,
+  "gpu": 1,
+  "job": {
+   "config": "E4b_e8c_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 3
+  },
+  "returncode": 0,
+  "hours": 1.1924284788635042
+ },
+ {
+  "i": 14,
+  "gpu": 0,
+  "job": {
+   "config": "E4b_e8c_colourtransfer",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 4
+  },
+  "returncode": 0,
+  "hours": 0.9504404738876555
+ }
+]

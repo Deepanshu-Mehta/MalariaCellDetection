@@ -1,0 +1,16 @@
+{
+ "n_cells": 27558,
+ "n_flagged": 312,
+ "flagged_fraction": 0.011321576311778794,
+ "flagged_by_label": {
+  "1": 198,
+  "0": 114
+ },
+ "flagged_patients": 115,
+ "fuhad_2020_removed_for_comparison": {
+  "parasitized": 647,
+  "uninfected": 750,
+  "total": 1397,
+  "note": "count-level comparison only; no file-level list found"
+ }
+}

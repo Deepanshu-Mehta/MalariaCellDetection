@@ -1,0 +1,3 @@
+{"name": "E1r_resnet18", "model": "resnet18", "pretrained": true, "img_size": 128, "epochs": 15,
+ "optimizer": "adamw_cosine", "max_lr": 0.0003, "weight_decay": 0.0001,
+ "_note": "Modern same-folds reference. ImageNet weights, 128 px (MedMNIST+ shows little gain above 128)."}

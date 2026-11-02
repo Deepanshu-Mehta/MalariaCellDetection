@@ -35,3 +35,26 @@ __pycache__/
 .ipynb_checkpoints/
 venv/
 .venv/
+
+# --- Research runs (checkpoints; copy results out, do not commit) ---
+research/runs/
+research/kaggle/_stage/
+research/runs_kaggle/**/*.pth
+research/data_external/
+
+# --- Personal notes and AI-generated planning material (local only) ---
+*.txt
+reports/
+research_notes/
+
+# --- Model files and heavy arrays (regenerable; checkpoints live with the Kaggle runs) ---
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.npy
+*.npz
+*.pkl
+!research/experiments/E6b_five_checkpoint_external_rescore/scores/*.npy
+research/runs_kaggle/**/code/
+research/experiments/E6b_five_checkpoint_external_rescore/_cache/

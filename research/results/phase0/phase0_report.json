@@ -1,0 +1,59 @@
+{
+ "n_cells": 27558,
+ "n_nih_ids": 201,
+ "n_patients_merged": 200,
+ "n_infected": 150,
+ "n_healthy_only": 50,
+ "merged_ids": {
+  "C47": [
+   "C47P8thinOriginalOlympusCX21",
+   "C47P8thin_Original_Motic"
+  ]
+ },
+ "healthy_only_share_of_uninfected": 0.24784091733797808,
+ "largest_patient": {
+  "patient": "C68",
+  "cells": 702,
+  "share": 0.025473546701502287
+ },
+ "infected_para_cells": {
+  "min": 1,
+  "median": 33.0,
+  "max": 633
+ },
+ "leaky_seed42_matches_M2": true,
+ "grouped_test_prevalence": {
+  "min": 0.4823639774859287,
+  "max": 0.5123731529286096,
+  "sd_pp": 1.0932443565188745
+ },
+ "random_30plus10_prevalence": {
+  "min": 0.2189332588662385,
+  "max": 0.671464555595538,
+  "sd_pp": 6.323132262939062
+ },
+ "colour_seconds": 79.0,
+ "colour_variance_explained_by_patient": {
+  "all_cells": {
+   "R": 0.893,
+   "G": 0.737,
+   "B": 0.901,
+   "S": 0.895,
+   "H": 0.937
+  },
+  "uninfected_only": {
+   "R": 0.898,
+   "G": 0.747,
+   "B": 0.902,
+   "S": 0.922,
+   "H": 0.926
+  },
+  "all_cells_by_nih_id": {
+   "R": 0.899,
+   "G": 0.738,
+   "B": 0.901,
+   "S": 0.898,
+   "H": 0.946
+  }
+ }
+}
