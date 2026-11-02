@@ -1,0 +1,30 @@
+{
+ "annotated_boxes": 86035,
+ "kept": 79722,
+ "images": 1328,
+ "exclusions": {
+  "rbc_overlaps_parasite": 4344,
+  "border": 1523,
+  "difficult": 446
+ },
+ "primary_parasitized": 2425,
+ "primary_uninfected": 77194,
+ "leukocytes": 103,
+ "prevalence_pct": 3.046,
+ "by_group": {
+  "jpg": {
+   "size": 5233,
+   "sum": 302.0
+  },
+  "png": {
+   "size": 74489,
+   "sum": 2123.0
+  }
+ },
+ "checksum_mismatch": 0,
+ "otsu_mask_failed": 138,
+ "png_files": {
+  "ellipse": 79722,
+  "otsu": 79722
+ }
+}

@@ -95,6 +95,8 @@ false-positive rate; E12 retrains; candidate 2 versus candidate 1.
 ## Runs
 | Date | What | Notes |
 |---|---|---|
+| 2026-11-02 | `build_crops.py` | 86,035 boxes, 79,722 kept: 2,425 parasitized, 77,194 uninfected, 103 leukocytes; prevalence 3.05%. Excluded: 4,344 red cells intersecting a parasite box, 1,523 border boxes, 446 difficult. All image checksums match. Otsu fell back to the full box on 138 crops |
+| 2026-11-02 | Crop audit, ellipse rule | 50 parasitized and 50 uninfected crops drawn by seeded RNG (`audit_sample.csv`), viewed with no scores. Done by the AI assistant, not an expert. All 100 contain their target cell, and none is a gross failure. About 8 of 50 uninfected crops show a dark neighbouring cell inside the ellipse. Parasitized crops show the same crowding. Two colour families are visible. Nothing was excluded or changed as a result |
 
 ## Result
 Pending.
