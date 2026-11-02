@@ -137,6 +137,8 @@ for planning the write-up.
   predicted 75-93%, within 0.3-0.7pp of fine-tuned DANet.
 - E5: Grad-CAM lands on annotated parasites on MP-IDB, but a no-model darkest-pixel rule does better (about 98%), so this
   shows dependence on the dark object, not learned parasite morphology. Single checkpoints, and NIH remains open.
+  **Update 2026-11-02 (E5b):** across five folds the rule beat CAM on 15 of 15 checkpoints, and fold 0 was unrepresentative
+  (E8c CAM about 90% on two folds, 8-16% on three).
 - E2's stain-swap behavioural test found no difference between norm types, even though the patient-ID probe
   (representational) did -- a real dissociation between what a model's features *encode* and what a simple
   counterfactual shows it *uses*, not fully resolved.
