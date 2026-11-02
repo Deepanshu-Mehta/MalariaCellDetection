@@ -6,6 +6,16 @@ Working plan for the paper beyond the course milestones. The background reports 
 
 ## 1. Venues (revised 2026-11-02)
 
+**Update, 2026-11-02: the journal-specific CiBM check below is now done**, from the journal's own
+[Guide for Authors](https://www.sciencedirect.com/journal/computers-in-biology-and-medicine/publish/guide-for-authors).
+Authors "may use AI tools to support them", never as "a substitute for human critical thinking, expertise, and evaluation", and the
+manuscript must reflect the authors' "own analysis, interpretation, insights, and ideas". A declaration goes in a new section
+before the references. Requirements for a Full Length Article: abstract at most 250 words, 1-7 keywords, 3-5 highlights of at most 85
+characters each in a separate file, an ethics statement or a reason none is needed, single-anonymised review. A graphical abstract and data
+statement are encouraged, and preprints do not count as prior publication. STARD applies if a diagnostic test is compared with a
+reference standard. Choose the section at submission; Medical Imaging or Foundations of AI in Medicine fits. A keyword search of
+the guide found no overall word limit, so confirm that at submission.
+
 **Rule: submit only where LLM use for ideas, design and analysis is allowed.** MIDL 2027 and TMLR are dropped. MIDL
 forbids using an LLM to generate "research ideas, study designs, analyses, results, or substantive text". TMLR
 allows writing help but expects "the ideas, claims and results found in submissions are human-sourced, not produced
