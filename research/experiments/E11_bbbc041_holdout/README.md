@@ -82,6 +82,23 @@ candidate 1. **Check, fixed now:** candidates 2 and 3 are also rehearsed on both
 either candidate's AUC is more than .01 higher on Otsu crops, in which case Otsu becomes primary. The result is recorded here
 before scoring.
 
+**Rehearsal result, 2026-11-02, on MP-IDB, before any BBBC041 score. No BBBC041 metric exists.** Candidate 3 has 15 of its 20 members here, because the ResNet-18s are
+still training.
+
+| Crops | Feature AUC / BACC | Candidate 2 AUC / BACC | Candidate 3 AUC / BACC (SE) | Candidate 3 best-threshold BACC* | Delta BACC, 3 minus 1 | Rule on MP-IDB |
+|---|---|---|---|---|---|---|
+| Cellpose (reference) | .987 / 93.0 | .919 / 73.8 | .973 / 82.0 (64.7) | 92.6 | -11.0 | not run |
+| Ellipse | .982 / 93.9 | .932 / 67.2 | .966 / 71.7 (43.9) | 91.7 | -22.3 [-26.4, -18.1] | Feature holds |
+| Otsu | .970 / 90.3 | .909 / 78.4 | .973 / 91.2 (85.0) | 92.7 | +0.9 [-1.3, 3.0] | Inconclusive |
+
+*Upper bound only, chosen on the same data.
+
+**The check as registered passes, and the ellipse stays primary:** candidate 2 is higher on ellipse crops, and candidate 3 is +.007 on Otsu crops, within the .01 limit.
+
+**The check was too narrow, which was a design error by the writer.** It tested AUC alone, while BACC is co-primary and is where the crop rule acts. Ranking barely moves. The trained
+models' threshold does: candidate 3's median parasite logit is -.36 on ellipse, +.87 on Cellpose and +2.09 on Otsu. Against the Cellpose reference, the ellipse costs candidate 3 about
+10 BACC and Otsu adds about 9, while the feature moves by under 3. Neither rule is neutral, and on MP-IDB the choice alone decides the outcome.
+
 **Order of work.** (1) Rehearse the exact scoring script on MP-IDB crops. (2) Build BBBC041 crops. (3) Audit 100 crops by eye
 with no model or feature scores in view, recording only whether a crop is usable. (4) Score, then save and hash every score file
 before any metric exists. Labels stay in a separate file the scoring script does not read. (5) Calculate once and apply the rule.

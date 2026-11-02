@@ -1,6 +1,6 @@
 # E5b: Five-checkpoint explanation check
 
-**Status:** registered 2026-11-02, not yet run  ·  **Outcome:** pending
+**Status:** done (local, no Kaggle quota)  ·  **Outcome:** primary prediction supported; rule met in all three arms; prediction 4 missed
 
 ## Question
 Does a CAM land on the parasite more often than a no-model rule, across checkpoints rather than one per arm?
@@ -41,9 +41,28 @@ any CAM from folds 1-4.
 ## Runs
 | Date | What | Notes |
 |---|---|---|
+| 2026-11-02 | `run.py` | 13 of 15 checkpoints, then MPS out of memory. Finished in a fresh process with the script's resume path. Saved results are unaffected |
 
 ## Result
-Pending.
+Hit rates in percent, on each checkpoint's true positives, out of 963 usable crops. CI: hierarchical bootstrap.
+
+| Arm | CAM mean +/- SD | CAM by fold (0-4) | Darkest pixel | Darkest minus CAM | True positives |
+|---|---|---|---|---|---|
+| E1 | 71.5 +/- 13.9 | 77.7, 68.5, 57.0, 62.3, 92.2 | 98.9 | +27.3 [15.1, 38.4] | 296-716 |
+| E8b | 94.5 +/- 2.3 | 94.1, 96.8, 95.0, 90.8, 96.0 | 98.9 | +4.4 [2.3, 6.8] | 373-640 |
+| E8c | 42.8 +/- 43.6 | 90.4, 16.3, 9.0, 90.4, 7.9 | 98.4 | +55.6 [22.3, 88.5] | 279-635 |
+
+| Prediction | Outcome |
+|---|---|
+| 1. Fold 0 reproduces at least 99% | **Supported:** hits and predictions match on 100% of crops in all arms |
+| 2. Darkest pixel beats CAM in every arm, at least 13 of 15 checkpoints | **Supported:** every arm, 15 of 15 |
+| 3. CAM SD at least 5 points in at least two arms | **Supported:** E1 13.9, E8c 43.6. E8b 2.3 |
+| 4. Centre stays 40-60% on every checkpoint | **Missed:** 1 checkpoint(s) outside, range 49.6-63.2 |
+
+**Decision rule:** met. The CI is above 0 in all three arms.
 
 ## Verdict and what we learned
-Pending.
+**CAM hits show dependence on a dark object, and give no evidence of learned morphology.** A rule with no model beats CAM on every
+checkpoint. The bigger lesson is instability: E5's fold 0 was not representative. E8c's CAM hit rate is about 90% on folds 0 and 3, and 8-16% on the
+other three. E8b is stable at 91-97%. This experiment does not explain why E8c splits this way. Single-checkpoint Grad-CAM should not be reported as an
+explanation of an architecture.

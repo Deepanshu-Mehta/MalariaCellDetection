@@ -2,6 +2,9 @@
 
 **Status:** done (local, no Kaggle quota)  ·  **Outcome:** confirmed directionally, magnitude far exceeds prediction -- important scope caveat (see Verdict)
 
+**Correction, 2026-11-02 (E5b):** the fold-0 CAM rates below are not representative. Across five folds, CAM hits on true positives are E1 71.6 +/- 13.9, E8b 94.5 +/- 2.3, E8c
+42.8 +/- 43.6, and the darkest-pixel rule beats CAM on all 15 checkpoints. See `../E5b_five_checkpoint_explanations/README.md`.
+
 > **Correction, 2026-11-02:** the ~15% chance level understated the baseline, because the dilated mask covers about 27%
 > of the cell foreground. A fixed image-centre point hits about 50% of true positives, and a no-model darkest-pixel rule
 > hits about 98%, above Grad-CAM's 78-94% (`exploratory/2026-11-02_paper_readiness/verify_corrections.json`). The inpaint
