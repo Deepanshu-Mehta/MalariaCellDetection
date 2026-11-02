@@ -1,6 +1,6 @@
 # E8r: Norm-layer leakage replication
 
-**Status:** registered 2026-11-02, not yet run; first to be dropped if quota is short  ·  **Outcome:** pending
+**Status:** done  ·  **Outcome:** not replicated under the registered rule; falsified
 
 ## Question
 Does LayerNorm's advantage over InstanceNorm on leaky splits replicate on new seeds?
@@ -36,9 +36,26 @@ fill that role.
 ## Runs
 | Date | What | Notes |
 |---|---|---|
+| 2026-11-02 | `e8r-leaky-replication` | 6/6 finished, return code 0, about 1.0 h each. No run stuck at chance |
 
 ## Result
-Pending.
+| Seed | LN (E8b) BACC | IN (E8c) BACC | LN minus IN |
+|---|---|---|---|
+| 45 | 97.17 | 97.21 | -.04 |
+| 46 | 97.19 | 97.04 | +.15 |
+| 47 | 97.21 | 96.86 | +.34 |
+| **Mean** | 97.19 | 97.04 | **+.15 [-.05, .36]** |
+
+Secondary: gap difference against E8's grouped values +.22, compared with E8's +.61.
+
+| Prediction | Outcome |
+|---|---|
+| 1. Mean about +.3, range +.1 to +.6 | Inside the range, below the central value |
+| 2. Positive on at least 2 of 3 seeds | **Supported:** 2 of 3 |
+| Decision rule | **Not replicated:** the CI includes 0 |
+
+**Falsified** under the registered condition, because the rule returned "not replicated".
 
 ## Verdict and what we learned
-Pending.
+**The claim that LayerNorm gains more from leakage than InstanceNorm is not confirmed, and goes back to exploratory.** E8's difference of +.54 on seeds 42-44 fell to +.15 on new seeds. LN's leaky score was stable (97.34 to 97.19), and most of the fall comes from IN moving up
+(96.80 to 97.04). The result does not show the effect is zero: the CI runs to +.36, which is above the MDE, so a modest effect remains possible. Three seeds on each side cannot settle that. E4b's reading, which assumed an LN leakage effect on one seed, is weakened along with it.

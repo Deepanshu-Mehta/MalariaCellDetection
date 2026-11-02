@@ -121,6 +121,7 @@ for planning the write-up.
   Uninfected cells sit in healthy-only patients, near the base rate. Call them flagged until an expert reviews them.
 - E8: LayerNorm profits from patient leakage (+0.63 BACC gap) where InstanceNorm doesn't (+0.02), with equal
   grouped accuracy -- E8a (LN + softmax gate) is invalid, doesn't train.
+  **Update 2026-11-02 (E8r): not replicated.** New seeds gave LN-IN +.15 [-.05, .36], so this is no longer listed as holding up.
 - E4b: colour transfer narrowed E8b's leakage gap (+0.627 to +0.222) and lowered its patient-ID probe (39.8% to 34.2%).
   Encouraging but not causal evidence yet: one leaky seed, no IN leaky controls. E6c then found these checkpoints do
   better on MP-IDB, BACC 72.6 to 79.6.
@@ -146,7 +147,8 @@ for planning the write-up.
 
 **The honest framing for the paper:** DANet's headline accuracy is not explained by patient leakage under patient-grouped
 splits (E1), though session leakage is untested (E10). DANet matches a generic ResNet-18 (E1r) and sits within a point of
-frozen features (E9). The norm layer changes how much in-domain leakage it exploits (E8), on exploratory evidence. No
+frozen features (E9). The norm layer changes how much in-domain leakage it exploits (E8), on exploratory evidence
+(**did not replicate in E8r, 2026-11-02**). No
 architecture ranking is shown on MP-IDB (E6b), while retraining on different patients moves results widely, and
 training-time colour transfer helps (E6c). A one-feature baseline is competitive on curated crops (exploratory, needs
 BBBC041). Report these as separately scoped claims, keeping the falsified ones on record.

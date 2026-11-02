@@ -109,7 +109,7 @@ Patient leakage barely changed DANet's score: leaky BACC 96.96 ± .20 against gr
 
 DANet matched a generic ResNet-18 on unseen patients (96.58 ± .05; paired difference +.13 [−.05, .30]), and frozen probes came within a point (DINOv2 96.03, DinoBloom 96.31, RedDino 96.45). DANet's margin over RedDino was above zero on repeat 0 only.
 
-The norm layer changed how much leakage a model exploited: LayerNorm gained +.63 from leakage and InstanceNorm +.02, with equal grouped accuracy (exploratory; approximate CI on the difference [.29, .90]). Replication: `[PENDING E8r]`.
+An early finding did not hold up. LayerNorm gained more from leakage than InstanceNorm on seeds 42-44 (leaky BACC 97.34 against 96.80, exploratory). A registered replication on new seeds gave a mean paired difference of +.15 [−.05, .36], and the claim was not replicated under our rule. We make no claim that the norm layer controls leakage use.
 
 ### 3.3 A single measurement on NIH
 

@@ -2,6 +2,9 @@
 
 **Status:** draft - team to confirm  ·  **Outcome:** — (positive / negative / invalid)
 
+> **Correction, 2026-11-02 (E8r):** the LN-IN leakage result below did not replicate. On new seeds 45-47, mean paired LN-IN leaky BACC was +.15 [-.05, .36], against +.54 here, and the registered rule returned "not replicated". The claim stays exploratory, and
+> the verdict below should be read with that in mind. See `../E8r_norm_layer_leaky_replication/README.md`.
+
 ## Question
 Do the paper's sigmoid gate / parallel dilations / LayerNorm change shortcut reliance?
 
