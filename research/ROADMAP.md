@@ -163,7 +163,11 @@ Given what Phase 1 actually found, in priority order:
 Re-check Kaggle quota before launching (it runs out faster than estimated in this project -- E4b's 15 runs
 cost ~18h against an ~9h estimate, and the week's reset is every Saturday).
 
-## 8. Three-day completion plan (revised 2026-11-02, not started)
+## 8. Three-day completion plan (revised 2026-11-02, started)
+
+**Correction, 2026-11-02:** the protocol below names Otsu masks. MP-IDB rehearsal favoured an inscribed ellipse, with Otsu kept as
+a sensitivity check, subject to a registered check that trained candidates are not disadvantaged. See
+`experiments/E11_bbbc041_holdout/README.md`.
 
 Constraints from the team: no push to a remote, and no expert review. So E7 stays "flagged, not adjudicated", and the
 paper states that prediction dates are self-reported. BBBC041 is scored once, so every candidate is frozen first.

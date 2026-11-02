@@ -49,7 +49,18 @@ patients and cells as well as prevalence, because the largest healthy blocks hol
 |---|---|---|
 
 ## Result
-Pending.
+**Part A (2026-11-02, `part_a.py`, `part_a_results.json`). Part B pending.** Measures below were fixed in the script
+before it ran. Cells: 13,665 Uninfected cells with E7 flags removed.
+
+| Prediction | Outcome |
+|---|---|
+| 1. Date explains at least 70% of the colour variance patient explains | **Supported:** eta-squared .748 vs .864, ratio 86.5% (86.6% adjusted for group count). By channel: R 90%, G 61%, B 97% |
+| 2. RedDino parasite-free AUC on shared dates below .75 | **Missed narrowly:** .767 [.519, .958], from .933 on all patients. n = 7 healthy, 27 infected |
+
+Secondary, same patients: DINOv2 .783 [.513, .979], colour .677 [.434, .894]. Comparing only healthy-infected pairs from the
+same date gives RedDino .641 [.313, .959], DINOv2 .667 [.263, 1.0], colour .333 [0, .643]. These rest on few pairs, so they
+are indicative only. The CIs are too wide to say how much of the parasite-free signal is batch. Part A does show that most
+of the colour signal sits at date level.
 
 ## Verdict and what we learned
 Pending.
