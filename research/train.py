@@ -62,12 +62,13 @@ def load_split(cells, split, repeat=0, fold=0, seed=42):
     """Returns (role Series aligned with cells: train / val / test, tag)."""
     sdir = ROOT / "splits"
     if split == "leaky":
-        role = pd.read_csv(sdir / "leaky_splits.csv", index_col="idx")[f"seed{seed}"]
+        name = "leaky_splits.csv" if seed in splits.LEAKY_SEEDS else "leaky_splits_replication.csv"
+        role = pd.read_csv(sdir / name, index_col="idx")[f"seed{seed}"]
         return role, f"leaky_s{seed}"
-    if split == "grouped":
-        f = pd.read_csv(sdir / "grouped_folds.csv")
+    if split in ("grouped", "session"):
+        f = pd.read_csv(sdir / f"{split}_folds.csv")
         f = f[(f.repeat == repeat) & (f.fold == fold)]
-        tag = f"grouped_r{repeat}f{fold}"
+        tag = f"{split}_r{repeat}f{fold}"
     elif split == "m3":
         f = pd.read_csv(sdir / "m3_splits.csv")
         f = f[f.seed == seed]
@@ -79,6 +80,11 @@ def load_split(cells, split, repeat=0, fold=0, seed=42):
     splits.assert_disjoint(by_role["train"], by_role["val"])
     role = cells.patient.map(dict(zip(f.patient, f.role)))
     assert role.notna().all(), "cells without a split role"
+    if split == "session":                            # E10: no imaging date may cross train, val and test
+        date = cells.rel_path.str.extract(r"IMG_(\d{8})")[0]
+        by_date = {r: set(date[role == r]) for r in ("train", "val", "test")}
+        splits.assert_disjoint(by_date["train"] | by_date["val"], by_date["test"])
+        splits.assert_disjoint(by_date["train"], by_date["val"])
     return role, tag
 
 
@@ -219,7 +225,7 @@ def train(model, loaders, cfg, out):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", required=True)
-    ap.add_argument("--split", choices=["grouped", "leaky", "m3"], required=True)
+    ap.add_argument("--split", choices=["grouped", "session", "leaky", "m3"], required=True)
     ap.add_argument("--repeat", type=int, default=0)
     ap.add_argument("--fold", type=int, default=0)
     ap.add_argument("--seed", type=int, default=42, help="leaky / m3 split seed")

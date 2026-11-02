@@ -28,6 +28,12 @@ materially change DANet's cell-level score, and that is reported plainly.
 **Falsified if:** the gap is below the 0.29 MDE, for prediction 3. Part A predictions are judged separately.
 
 ## Protocol
+**Addendum, 2026-11-02, before any run. The prediction above is unchanged.** Validation is also date-separated, so train,
+validation and test share no date. The run estimate rises from about 3h to 5.5 run-hours. Blocks are balanced on healthy
+patients and cells as well as prevalence, because the largest healthy blocks hold 13, 11 and 8 patients. Final split, from
+`scripts/build_session_splits.py`, hashed in `splits/SHA256SUMS`: 50 blocks; healthy per test fold 11/8/13/9/9; test patients
+40/41/41/39/39; test prevalence SD .10; validation 16 patients with 4 healthy in every fold. Date is a proxy for session.
+
 - **Part A (no GPU):** variance in foreground colour explained by date vs patient; parasite-free patient AUC
   restricted to shared dates.
 - **Part B:** patients linked by any shared date form one block (connected components, since 6 patients span

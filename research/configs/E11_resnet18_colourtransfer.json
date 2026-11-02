@@ -1,0 +1,3 @@
+{"name": "E11_resnet18_colourtransfer", "model": "resnet18", "pretrained": true, "img_size": 128, "epochs": 15,
+ "optimizer": "adamw_cosine", "max_lr": 0.0003, "weight_decay": 0.0001, "colour_transfer": true, "colour_transfer_prob": 0.5,
+ "_note": "E1r config plus E4b's training-time colour transfer. Five grouped r0 folds join the BBBC041 candidate 3 ensemble."}

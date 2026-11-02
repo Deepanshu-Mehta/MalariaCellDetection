@@ -63,7 +63,7 @@ def parse_job(spec):
     parts = spec.split(":")
     job = {"config": parts[0], "split": parts[1], "set": []}
     pos = [p for p in parts[2:] if "=" not in p]
-    if job["split"] == "grouped" and pos:
+    if job["split"] in ("grouped", "session") and pos:
         job["repeat"], job["fold"] = int(pos[0]), int(pos[1])
     for p in parts[2:]:
         if p.startswith("seed="):
