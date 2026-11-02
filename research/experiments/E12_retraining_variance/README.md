@@ -48,7 +48,15 @@ score from a repeat 1-2 checkpoint or a ResNet-18.
 |---|---|---|
 
 ## Result
-Pending.
+**Prediction 4 (2026-11-02, `analysis.py`, `results.json`). Predictions 1-3 wait for the Kaggle seeds.**
+
+| Checkpoints | BACC mean +/- SD (range) | AUC mean +/- SD | SE | SP | Prediction 4 |
+|---|---|---|---|---|---|
+| E1 repeats 1-2 (10) | 71.56 +/- 6.53 (58.3-79.8) | 0.874 +/- 0.039 | 46.8 | 96.3 | **Supported:** mean in 70-76, SD at least 5 |
+| ResNet-18 repeats 0-2 (15) | 67.41 +/- 5.81 (59.6-77.1) | 0.902 +/- 0.027 | 35.6 | 99.2 | **Supported:** SD at least 3, mean below 80 |
+
+Unregistered observation: ResNet-18 has the lower BACC but the higher mean AUC, with SE 35.6 and SP 99.2. At threshold .5
+both models under-call parasites on MP-IDB, so ranking and thresholding need separate reporting.
 
 ## Verdict and what we learned
 Pending.
