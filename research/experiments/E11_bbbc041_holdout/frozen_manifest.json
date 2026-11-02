@@ -27,7 +27,13 @@
   "E8c_f3": "adba43de105a360d790b119158d58445f009f69c0948f442fb92452f2fca11e6",
   "E8c_f4": "c8d4d9b68b746f2727f3d5815f0ef14b7e359f938366891d308f6b4c5a2400c2"
  },
- "candidate_3_resnet18": "added when the E11 runs finish, before scoring",
+ "candidate_3_resnet18": {
+  "f0": "9bd727aea1d0fc78b7a681e287b0e93581f35cd24cf7c34fbf6851647ecc7b37",
+  "f1": "74115def61ec1993b0705cde2489bf07aee7f15ec73618fbc8ebd196d0002178",
+  "f2": "83d05ba0080abfb011894f107c7fe74951e3624a4de6a131ea3d73b787665538",
+  "f3": "f4ec8b8488d947a784c67008ef49b146ed5649e1c9201c5d85ee781b9f403a11",
+  "f4": "e8bb84f93fc8d66391f8a611ca41c2f661f6fffbaf2a80407bc78757e9c9e00e"
+ },
  "probes": {
   "dinov2_s": "2b5f8b1c366f4a07402e863ad5425cea2ab7565ffbdd14beeecb5b985a62e540",
   "dinobloom_s": "f10521718ac930259cc9cabd9699c94bd60f7e3db7cd85e488e84e8fc4ffab43"
