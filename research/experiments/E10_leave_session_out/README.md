@@ -59,7 +59,7 @@ before it ran. Cells: 13,665 Uninfected cells with E7 flags removed.
 
 Secondary, same patients: DINOv2 .783 [.513, .979], colour .677 [.434, .894]. Comparing only healthy-infected pairs from the
 same date gives RedDino .641 [.313, .959], DINOv2 .667 [.263, 1.0], colour .333 [0, .643]. These rest on few pairs, so they
-are indicative only. The CIs are too wide to say how much of the parasite-free signal is batch. Part A does show that most
+are indicative only: 39 pairs over 4 dates, three of which hold a single healthy patient. The CIs are too wide to say how much of the parasite-free signal is batch. Part A does show that most
 of the colour signal sits at date level.
 
 ## Verdict and what we learned

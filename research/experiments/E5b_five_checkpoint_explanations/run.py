@@ -115,18 +115,22 @@ def analyse():
                                         max_energy_diff=float((now.energy - now.energy_e5).abs().max()))
     O = dict(reproduction={a: per[a].pop("reproduction") for a in ARMS})
     files = per["E1"][0].file.values
+    image = table().set_index("file").image.reindex(files).values
+    groups = [np.where(image == k)[0] for k in pd.unique(image)]
     grid = {a: {f: per[a][f].set_index("file").loc[files] for f in FOLDS} for a in ARMS}
+    gap = {a: {f: (grid[a][f].orig_pred.values == 1, grid[a][f].darkest.values.astype(float), grid[a][f].pointing_game.values.astype(float))
+               for f in FOLDS} for a in ARMS}
     rng = np.random.default_rng(0)
     draws = {a: [] for a in ARMS}
     for _ in range(B):
-        c = rng.integers(0, len(files), len(files))
+        c = np.concatenate([groups[j] for j in rng.integers(0, len(groups), len(groups))])   # whole images, as in E6b
         fs = rng.integers(0, 5, 5)
         for a in ARMS:
             vals = []
             for f in fs:
-                g = grid[a][f].iloc[c]
-                tp = g.orig_pred.values == 1
-                vals.append(100 * (g.darkest.values[tp].mean() - g.pointing_game.values[tp].mean()))
+                tp, dark, cam = gap[a][f]
+                t = tp[c]
+                vals.append(100 * (dark[c][t].mean() - cam[c][t].mean()))
             draws[a].append(np.mean(vals))
     O["arms"] = {}
     wins = 0

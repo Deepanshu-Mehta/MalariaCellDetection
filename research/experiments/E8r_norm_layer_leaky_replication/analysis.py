@@ -37,7 +37,7 @@ def main():
         O["per_seed"][s]["LN_minus_IN"] = O["per_seed"][s]["LN"]["BACC"] - O["per_seed"][s]["IN"]["BACC"]
     diffs = [O["per_seed"][s]["LN_minus_IN"] for s in SEEDS]
     O["mean_LN_minus_IN"] = float(np.mean(diffs))
-    patients = sorted(P["LN"][45].patient.unique())
+    patients = sorted(set().union(*[set(P[a][s].patient) for a in ARMS for s in SEEDS]))
     C = {a: np.stack([counts(P[a][s], patients) for s in SEEDS]) for a in ARMS}
     rng = np.random.default_rng(0)
     draws = []

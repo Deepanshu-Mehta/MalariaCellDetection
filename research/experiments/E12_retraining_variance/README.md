@@ -7,6 +7,9 @@ How much of the checkpoint-to-checkpoint spread on MP-IDB comes from the trainin
 patients held fixed?
 
 ## Why this exists
+**Correction, 2026-11-02, after registration:** "differ by under 1 BACC" below is wrong. E1's repeat-0 NIH BACC has SD .94 across folds, with a range of 95.3 to 97.9. The argument
+and the prediction are unchanged, since 8.4 is still about nine times .94.
+
 E6b found between-fold BACC SDs of 5.3-8.4 on MP-IDB, while the same checkpoints differ by under 1 BACC on NIH. Each
 fold changes both the training patients and the fitted model, so E6b cannot separate them. Exploratory checks on
 E6b's scores (fold-mean SD 6.12, arm-mean SD 1.91) suggested possible underspecification, but no run has fixed the

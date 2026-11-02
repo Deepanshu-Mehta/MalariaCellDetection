@@ -111,6 +111,7 @@ def resnet_members():
 def fit_probe(name):
     path = HERE / "probes" / f"{name}.pkl"
     if path.exists():
+        assert sha256(path) == MANIFEST["probes"][name], f"probe changed: {name}"
         return pickle.load(open(path, "rb"))
     path.parent.mkdir(exist_ok=True)
     cells = pd.read_csv(RESEARCH / "splits" / "cells.csv", index_col="idx")

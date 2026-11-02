@@ -44,13 +44,16 @@ any CAM from folds 1-4.
 | 2026-11-02 | `run.py` | 13 of 15 checkpoints, then MPS out of memory. Finished in a fresh process with the script's resume path. Saved results are unaffected |
 
 ## Result
-Hit rates in percent, on each checkpoint's true positives, out of 963 usable crops. CI: hierarchical bootstrap.
+**Correction, 2026-11-02:** the first analysis resampled crops, not whole images as the registered "as in E6b" requires. It was fixed and rerun. CI limits moved by under .7 points, and no
+conclusion changed.
+
+Hit rates in percent, on each checkpoint's true positives, out of 963 usable crops. CI: hierarchical bootstrap over images and folds.
 
 | Arm | CAM mean +/- SD | CAM by fold (0-4) | Darkest pixel | Darkest minus CAM | True positives |
 |---|---|---|---|---|---|
-| E1 | 71.5 +/- 13.9 | 77.7, 68.5, 57.0, 62.3, 92.2 | 98.9 | +27.3 [15.1, 38.4] | 296-716 |
-| E8b | 94.5 +/- 2.3 | 94.1, 96.8, 95.0, 90.8, 96.0 | 98.9 | +4.4 [2.3, 6.8] | 373-640 |
-| E8c | 42.8 +/- 43.6 | 90.4, 16.3, 9.0, 90.4, 7.9 | 98.4 | +55.6 [22.3, 88.5] | 279-635 |
+| E1 | 71.5 +/- 13.9 | 77.7, 68.5, 57.0, 62.3, 92.2 | 98.9 | +27.3 [15.8, 38.0] | 296-716 |
+| E8b | 94.5 +/- 2.3 | 94.1, 96.8, 95.0, 90.8, 96.0 | 98.9 | +4.4 [2.1, 6.9] | 373-640 |
+| E8c | 42.8 +/- 43.6 | 90.4, 16.3, 9.0, 90.4, 7.9 | 98.4 | +55.6 [22.1, 88.6] | 279-635 |
 
 | Prediction | Outcome |
 |---|---|

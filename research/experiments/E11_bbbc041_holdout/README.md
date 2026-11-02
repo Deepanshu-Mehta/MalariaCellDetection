@@ -50,7 +50,7 @@ All are fitted on NIH only. Nothing is refitted, recalibrated or thresholded on 
 | 3 | Colour-transfer ensemble | Mean logit of 15 E4b DANets and 5 E11 ResNet-18s, grouped r0 | mean logit at least 0 |
 | 4 | Frozen probes (descriptive) | DINOv2 and DinoBloom, logistic regression refitted on all NIH cells with E9's settings | p at least .5 |
 
-Logits are clipped as in the development checks (p in [1e-6, 1 - 1e-6]). RedDino is excluded, because its training list could
+The frozen .3047 is the NIH maximiser (.30465) rounded to four places, which gives the same MP-IDB BACC; the module's "exact" wording is left as frozen. Logits are clipped as in the development checks (p in [1e-6, 1 - 1e-6]). RedDino is excluded, because its training list could
 not be confirmed free of BBBC041. Checkpoint hashes go in `frozen_manifest.json`, with ResNet-18 hashes added when those runs
 finish and before scoring.
 
@@ -106,6 +106,10 @@ still training.
 **The check was too narrow, which was a design error by the writer.** It tested AUC alone, while BACC is co-primary and is where the crop rule acts. Ranking barely moves. The trained
 models' threshold does: candidate 3's median parasite logit is -.36 on ellipse, +.87 on Cellpose and +2.09 on Otsu. Against the Cellpose reference, the ellipse costs candidate 3 about
 10 BACC and Otsu adds about 9, while the feature moves by under 3. Neither rule is neutral, and on MP-IDB the choice alone decides the outcome.
+
+**Audit of the scoring path, 2026-11-02, reading no BBBC041 data.** Local DINOv2 and DinoBloom features match the Kaggle features the probes were fitted on (cosine at least .9999997).
+DinoBloom's low MP-IDB AUC (.687 on ellipse crops) is therefore real, not a loading error. The ResNet-18 path agrees with saved NIH predictions on 99.9% of 1,024 calls. The 8-bit cache
+agrees with E6b's 16-bit path on 99.9% of MP-IDB calls, with an AUC difference of .0002. Fitted probe hashes are added to `frozen_manifest.json`, and `score.py` asserts them.
 
 **Order of work.** (1) Rehearse the exact scoring script on MP-IDB crops. (2) Build BBBC041 crops. (3) Audit 100 crops by eye
 with no model or feature scores in view, recording only whether a crop is usable. (4) Score, then save and hash every score file

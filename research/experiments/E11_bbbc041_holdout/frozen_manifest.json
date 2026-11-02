@@ -27,5 +27,9 @@
   "E8c_f3": "adba43de105a360d790b119158d58445f009f69c0948f442fb92452f2fca11e6",
   "E8c_f4": "c8d4d9b68b746f2727f3d5815f0ef14b7e359f938366891d308f6b4c5a2400c2"
  },
- "candidate_3_resnet18": "added when the E11 runs finish, before scoring"
+ "candidate_3_resnet18": "added when the E11 runs finish, before scoring",
+ "probes": {
+  "dinov2_s": "2b5f8b1c366f4a07402e863ad5425cea2ab7565ffbdd14beeecb5b985a62e540",
+  "dinobloom_s": "f10521718ac930259cc9cabd9699c94bd60f7e3db7cd85e488e84e8fc4ffab43"
+ }
 }

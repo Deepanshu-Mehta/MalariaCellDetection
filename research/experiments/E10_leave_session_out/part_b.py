@@ -28,7 +28,8 @@ def main():
     O["healthy_only_fp_pct"] = {n: 100 * float((d[d.patient.isin(healthy)].p >= .5).mean()) for n, d in (("grouped", grouped), ("session", session))}
     g = O["gap"]["BACC"]
     O["rule_session_leakage_real"] = bool(g["diff"] >= MDE and g["lo"] > 0)
-    O["prediction3_range_0_to_0.8"] = bool(0 <= g["diff"] <= .8)
+    O["prediction3_falsified_gap_below_mde"] = bool(g["diff"] < MDE)
+    O["within_plausible_range_0_to_0.8"] = bool(0 <= g["diff"] <= .8)
     assert (folds.groupby("fold").role.value_counts().unstack().sum(axis=1) == 200).all()
     json.dump(O, open(HERE / "part_b_results.json", "w"), indent=1, default=float)
     print(json.dumps(O, indent=1, default=float))
