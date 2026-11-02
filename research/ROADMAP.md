@@ -162,3 +162,56 @@ Given what Phase 1 actually found, in priority order:
 
 Re-check Kaggle quota before launching (it runs out faster than estimated in this project -- E4b's 15 runs
 cost ~18h against an ~9h estimate, and the week's reset is every Saturday).
+
+## 8. Three-day completion plan (revised 2026-11-02, not started)
+
+Constraints from the team: no push to a remote, and no expert review. So E7 stays "flagged, not adjudicated", and the
+paper states that prediction dates are self-reported. BBBC041 is scored once, so every candidate is frozen first.
+
+**Prior art to cite:** EMFE (arXiv 2608.24793) is a five-feature green-channel spot model under patient-grouped CV: NIH
+AUC .9765, BACC 94.6, no external test, and hard negatives untested. What can be new: one feature tested outside NIH,
+retraining variance, the date and cell-count confounds, and the audit corrections. MalariaNet's BBBC041 result (SE 96.4,
+SP 18.0) runs opposite to MP-IDB, so expect specificity to be the risk there.
+
+**Frozen BBBC041 candidates:** (1) dark-spot feature, threshold .3047, the exact NIH maximiser, with its code hash;
+(2) E1 DANet 5-fold ensemble; (3) colour-transfer ensemble of 15 DANet plus 5 new ResNet-18; (4) frozen DINOv2 and
+DinoBloom probes, refitted and rehearsed on MP-IDB first. Secondary: E12 retrains, leukocytes as hard negatives,
+acquisition groups if the files can map them.
+
+**Cut after MP-IDB development checks:** fusion (NIH AUC .9938 to .9940, MP-IDB BACC 84.8 vs feature 93.0) and image-median
+recalibration (BACC 82.0 falls to 68.7).
+
+**Outcome rule, delta = candidate 3 minus candidate 1, 97.5% image-clustered CIs (two co-primary metrics, alpha/2 each):**
+
+| Order | Outcome | Condition |
+|---|---|---|
+| 1 | No transfer | AUC below .80 for both candidates |
+| 2 | Feature holds | AUC upper bound at most +.01 and BACC upper bound at most +2 |
+| 3 | Trained model wins | AUC lower bound above +.01 and BACC lower bound above +2 |
+| 4 | Ranking and threshold disagree | The AUC and BACC decisions point opposite ways |
+| 5 | Inconclusive | Anything else |
+
+The BACC margin of 2 reflects the feature's 2.2-point MP-IDB swing across thresholds that are equivalent on NIH.
+
+**BBBC041 protocol changes, before scoring:** score every cell with no label-based subsampling, which also preserves
+natural prevalence for PPV. Exclude uninfected boxes overlapping a parasite box, matching MP-IDB. Rehearse Otsu masks and
+the exact scoring script on MP-IDB first. Save and hash scores before any metric. A rescore is allowed only for a failed
+automated integrity check (row count, file hash, NaN rate), never because of a metric.
+
+| Kaggle order | Runs | Run-hours |
+|---|---|---|
+| E10 (date-separated train, validation and test; healthy per fold 13/9/8/9/11, prevalence SD .07 in a trial search) | 5 | 5.5 |
+| ResNet-18 colour transfer | 5 | 1 |
+| E12: E1 config, 2 randomly drawn folds, 4 new seeds each | 8 | 8 |
+| E8b and E8c on new leaky seeds 45-47, in a new split file, dropped first if short | 6 | 6.3 |
+
+About 21 run-hours, or about 10.5 hours on two GPUs. Split across two pushes because a session caps near 11.5 hours.
+
+| Day | Work |
+|---|---|
+| 1 | Add session split, launch Kaggle. Run E10 part A, the E5 five-checkpoint rerun and the 25 unused checkpoints. Download BBBC041 and inspect file structure only. Register E11, E12 and the E8 replication |
+| 2 | Fetch and analyse runs. Rehearse on MP-IDB. Build and audit BBBC041 crops with no model or feature scores. Write Introduction, Methods and one Results outline per outcome |
+| 3 | Score, hash, then calculate. Apply the rule and complete the matching draft |
+
+**Cut for time:** leakage ladder, pasted hard negatives, E4b leaky controls, sub-cell MIL, and the Fourier screen.
+Deferring the Fourier screen is a stated departure from E6c's rule.
