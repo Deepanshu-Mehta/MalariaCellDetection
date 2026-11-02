@@ -23,6 +23,11 @@
   "cand3_E8c_f2": "885dc9cbbc09ed84f1a82710c75a4fc8f18352491aa2253e6593cfd3276621a7",
   "cand3_E8c_f3": "df0eb8256eac9d544cee40e576160dbfcc3dca8a0323ac11545eae12a0864fd9",
   "cand3_E8c_f4": "972f3ecaeb1b4249fc18e97533a9e678b28307c85453282202434937671b7d7e",
+  "cand3_resnet_f0": "450f6d6798a8bf41c737890c530b66b73ec09476cacb57fa4452905ee7a3048b",
+  "cand3_resnet_f1": "08f826c0cebe00e6d3edfd19e6400e2bb8fe22122157098e2f828ee4b189be95",
+  "cand3_resnet_f2": "fd618f2ba228eaa03276e613a75f2e233df3bc8b8d8863fbb0bee772d5d0db54",
+  "cand3_resnet_f3": "ae6d18bf72cc176c472646b5c03f6b1face252f0f8ee42cf46628b1fcfefc7df",
+  "cand3_resnet_f4": "675c718beadbf9be259a77bb6ec5dfe954fb9c6fa41744341d8072cc7fdf8b94",
   "feature": "4fc3b8cec4f1a3668ce33c42c875ddd05292894d76ffe0320d6524441ea9ed8b",
   "probe_dinobloom_s": "d113431b806dcd3d82925541bb7ab525dafd7a8857557a663b3dd5663ea5c04e",
   "probe_dinov2_s": "27876a797768615e9f2dfbcf7c2e9b4795b41c37f78f0f18a78a21172f3820cc"
@@ -48,6 +53,11 @@
   "cand3_E8c_f2": 0.0,
   "cand3_E8c_f3": 0.0,
   "cand3_E8c_f4": 0.0,
+  "cand3_resnet_f0": 0.0,
+  "cand3_resnet_f1": 0.0,
+  "cand3_resnet_f2": 0.0,
+  "cand3_resnet_f3": 0.0,
+  "cand3_resnet_f4": 0.0,
   "feature": 0.0,
   "probe_dinobloom_s": 0.0,
   "probe_dinov2_s": 0.0

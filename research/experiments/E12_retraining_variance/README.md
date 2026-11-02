@@ -1,6 +1,6 @@
 # E12: Retraining variance on external data
 
-**Status:** registered 2026-11-02, not yet run  ·  **Outcome:** pending
+**Status:** done (Kaggle and local, 2026-11-02 to 11-03)  ·  **Outcome:** falsified on prediction 1's BACC range, because seed spread came out larger than predicted; predictions 2, 3 and 4 supported
 
 ## Question
 How much of the checkpoint-to-checkpoint spread on MP-IDB comes from the training seed alone, with the training
@@ -49,9 +49,38 @@ score from a repeat 1-2 checkpoint or a ResNet-18.
 ## Runs
 | Date | What | Notes |
 |---|---|---|
+| 2026-11-02 | (local) `score_checkpoints.py --set unused` | 25 unused checkpoints |
+| 2026-11-02 to 11-03 | Kaggle `e10-e11-e12-batch`, E1 config, grouped r0 folds 2 and 3, `train_seed` 1-4 | 8 runs, all return code 0, about 1.05h each |
+| 2026-11-03 | (local) `score_checkpoints.py --set seeds`, `analysis.py` | E1 r0f0 reproduced E6b exactly (max p difference 0) |
 
 ## Result
-**Prediction 4 (2026-11-02, `analysis.py`, `results.json`). Predictions 1-3 wait for the Kaggle seeds.**
+**Predictions 1-3 (2026-11-03, `analysis.py`, `results.json`).** MP-IDB, threshold .5:
+
+| Fold | Seed | MP-IDB BACC | AUC | SE | SP | NIH test BACC |
+|---|---|---|---|---|---|---|
+| 2 | 0 | 85.70 | .945 | 74.4 | 97.0 | 96.63 |
+| 2 | 1 | 82.15 | .943 | 65.4 | 98.9 | 97.12 |
+| 2 | 2 | 67.86 | .880 | 38.0 | 97.7 | 97.27 |
+| 2 | 3 | 72.33 | .898 | 48.1 | 96.6 | 97.11 |
+| 2 | 4 | 74.01 | .889 | 51.1 | 96.9 | 97.13 |
+| 3 | 0 | 73.29 | .878 | 50.2 | 96.4 | 97.89 |
+| 3 | 1 | 71.67 | .856 | 47.9 | 95.5 | 97.89 |
+| 3 | 2 | 66.87 | .817 | 36.2 | 97.5 | 97.73 |
+| 3 | 3 | 73.36 | .860 | 52.2 | 94.5 | 97.92 |
+| 3 | 4 | 59.61 | .845 | 19.9 | 99.3 | 97.74 |
+
+| Prediction | Result | Outcome |
+|---|---|---|
+| 1. Pooled seed SD 3 to 6 BACC, .01 to .04 AUC | BACC SD **6.63 [4.48, 12.71]**, 8 df; AUC SD .027 [.018, .052] | **BACC range missed, above the top; falsified.** AUC point estimate in range |
+| 2. NIH SD under .5 and at most a fifth of MP-IDB | NIH SD .18 [.12, .35]; ratio .03 | **Supported** |
+| 3. Fold 2 seeds 1-4 at least 3 BACC below 85.7 | Mean 74.09, which is 11.61 below | **Supported** |
+
+Secondary, rough because it borrows E6b's five-fold SD of 8.41: seed variance is 62% of E1's total single-checkpoint variance.
+
+Unregistered, computed after seeing the table: fold 2's seed 0 was known to be high before registration, so dropping both seed 0
+rows gives a pooled SD of 6.07 on 6 df. The excess over 6 does not depend on that row, though the difference is small and well inside the CI.
+
+**Prediction 4 (2026-11-02, `analysis.py`, `results.json`).**
 
 | Checkpoints | BACC mean +/- SD (range) | AUC mean +/- SD | SE | SP | Prediction 4 |
 |---|---|---|---|---|---|
@@ -62,4 +91,18 @@ Unregistered observation: ResNet-18 has the lower BACC but the higher mean AUC, 
 both models under-call parasites on MP-IDB, so ranking and thresholding need separate reporting.
 
 ## Verdict and what we learned
-Pending.
+**Falsified as registered, because the spread was larger than predicted, not smaller.** The point estimate is 6.63 against a
+top of 6. The CI runs from 4.48 to 12.71, so the data do not exclude part of the predicted range, but the registered test was on
+the range, and it was missed.
+
+**By the interpretation rule, a single checkpoint's external BACC is unsafe even with the training data fixed.** Seed SD is at
+least 3, and the CI's lower bound is too. The same ten checkpoints differ by an SD of .18 on NIH, so NIH could not have
+warned of this: on fold 3, seeds 0 and 4 differ by .15 on NIH and by 13.7 on MP-IDB. This is direct evidence of underspecification.
+Fold 2's 85.7, the best E1 value, regressed to 74.1 on new seeds, so that value owed more to the seed than to the fold's patients.
+
+**Consequences.** E6b's between-fold spread cannot be read as data variance alone. BBBC041 candidates are ensembles, which is the
+right choice given this result, though no selection from E12 fed them. Sensitivity drives the spread: SE runs from 19.9 to 74.4
+while SP stays between 94.5 and 99.3, which fits E11's separation of ranking from threshold.
+
+**Limits.** Two folds, five seeds each, one architecture, one external dataset. E12 cannot estimate data variance on its own, and
+the 62% share is rough.

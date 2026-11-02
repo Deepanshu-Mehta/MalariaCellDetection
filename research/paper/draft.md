@@ -67,7 +67,7 @@ rounded to four places. The rule has one threshold and no other fitted parameter
 
 ### 2.5 External evaluation
 
-No model, threshold or normalisation was fitted on external data. On MP-IDB, E6b scored 15 checkpoints across three arms; E6c added colour-transfer checkpoints. E12 fixed the training data and varied the seed (`[PENDING]`).
+No model, threshold or normalisation was fitted on external data. On MP-IDB, E6b scored 15 checkpoints across three arms; E6c added colour-transfer checkpoints. E12 fixed the training data and varied only the seed: E1 configuration, grouped repeat 0, two randomly drawn folds and seeds 1 to 4, scored on MP-IDB at threshold .5 and summarised as a pooled within-fold SD with a chi-square CI.
 
 **BBBC041, one-shot.** Four candidates were frozen, with hashes recorded before scoring: (1) the dark-spot rule; (2) an E1 five-fold ensemble; (3) a colour-transfer ensemble of 15 DANets and 5 ResNet-18s; (4) DINOv2 and DinoBloom probes, as descriptive comparators. Ensembles use the mean logit, with
 decision threshold 0. BBBC041 offers boxes, not masks, so crops were made with two rules: an ellipse inscribed in the box, and Otsu thresholding of the green channel. Delta is candidate 3 minus candidate 1. AUC and balanced accuracy were co-primary, each with a 97.5% image-clustered percentile bootstrap CI (5,000
@@ -105,7 +105,7 @@ On uninfected cells alone, frozen RedDino features separated healthy from infect
 
 ### 3.2 Leakage and internal accuracy
 
-Patient leakage barely changed DANet's score: leaky BACC 96.96 ± .20 against grouped 96.71 ± .08, a gap of +.26, below the MDE and against our Milestone 3 prediction of a 1 to 2.5 point drop. Session leakage: `[PENDING E10 part B]`.
+Patient leakage barely changed DANet's score: leaky BACC 96.96 ± .20 against grouped 96.71 ± .08, a gap of +.26, below the MDE and against our Milestone 3 prediction of a 1 to 2.5 point drop. Moving to session-held-out folds, with train, validation and test sharing no date, changed pooled BACC from 96.78 to 96.54, a gap of +.24 [−.06, .59] on one repeat. This is below the MDE and below our prediction of about +.35, so the rule does not call session leakage real, and AUC did not move (−.0001 [−.0009, .0007]). The gap sits close to the MDE and our protocol asks for a second repeat before any claim, so we do not claim that session leakage is absent either.
 
 DANet matched a generic ResNet-18 on unseen patients (96.58 ± .05; paired difference +.13 [−.05, .30]), and frozen probes came within a point (DINOv2 96.03, DinoBloom 96.31, RedDino 96.45). DANet's margin over RedDino was above zero on repeat 0 only.
 
@@ -123,7 +123,7 @@ single-checkpoint result was not representative. These hits show dependence on a
 ### 3.5 External development on MP-IDB
 
 No architecture ranking survived five checkpoints per arm (E8b − E1: +1.67 [−1.98, 5.42]; E8c − E1: −2.14 [−7.84, 3.24]), and we withdrew our earlier claim that gate and dilation drive robustness. Between-checkpoint spread was large: E1 BACC 72.75 ± 8.41 on repeat 0, and 71.56 ± 6.53 on 10 further checkpoints. ResNet-18 scored 67.41 ± 5.81 across 15 checkpoints.
-Seed-only spread: `[PENDING E12]`.
+With the training patients fixed, the seed alone gave a pooled BACC SD of 6.63 [4.48, 12.71] on MP-IDB, above our predicted 3 to 6, and an AUC SD of .027 [.018, .052]. The same checkpoints had an SD of .18 [.12, .35] on NIH. On one fold, two seeds differed by .15 on NIH and by 13.7 on MP-IDB, and E1's best value of 85.7 fell to a mean of 74.1 on new seeds. Sensitivity drove the spread (19.9 to 74.4), while specificity stayed between 94.5 and 99.3.
 
 Training-time colour transfer raised BACC by +7.05 [4.35, 9.65] and AUC by +.059 [.036, .088], against our prediction of little change. Test-time Reinhard normalisation lowered BACC by 18.75 [15.03, 22.73].
 
@@ -131,15 +131,15 @@ The dark-spot rule reached AUC .987 and BACC 93.0 on MP-IDB (exploratory; develo
 
 ### 3.6 Ranking is stable where the threshold is not
 
-Candidate 3 had similar AUC across crop masks, and similar BACC when given a best-case threshold, yet its BACC at the fixed threshold ranged from 71.7 to 91.2 (Table 2; 15 of 20 members, ResNet-18s pending). The feature's BACC moved by under 4 points. ResNet-18 showed the same split: it had higher AUC than E1 (.902 against .874) but lower BACC, with SE 35.6 and SP 99.2. A model's external operating point depends on how the crop was prepared, which NIH cannot reveal.
+Candidate 3 had almost identical AUC across crop masks (.981 to .982), and similar BACC when given a best-case threshold (94.2 to 95.3), yet its BACC at the fixed threshold ranged from 78.8 to 91.1 (Table 2). The feature's BACC moved by under 4 points. ResNet-18 showed the same split: it had higher AUC than E1 (.902 against .874) but lower BACC, with SE 35.6 and SP 99.2. A model's external operating point depends on how the crop was prepared, which NIH cannot reveal.
 
 **Table 2. MP-IDB by crop mask.**
 
 | Crops | Feature AUC / BACC | Candidate 3 AUC / BACC | Candidate 3 SE | Best-threshold BACC (upper bound) |
 |---|---|---|---|---|
-| Cellpose | .987 / 93.0 | .973 / 82.0 | 64.7 | 92.6 |
-| Inscribed ellipse | .982 / 93.9 | .966 / 71.7 | 43.9 | 91.7 |
-| Otsu | .970 / 90.3 | .973 / 91.2 | 85.0 | 92.7 |
+| Cellpose | .987 / 93.0 | .982 / 83.8 | 68.0 | 94.5 |
+| Inscribed ellipse | .982 / 93.9 | .982 / 78.8 | 58.2 | 95.3 |
+| Otsu | .969 / 90.3 | .981 / 91.1 | 83.4 | 94.2 |
 
 ### 3.7 One-shot test on BBBC041
 
@@ -147,7 +147,30 @@ Candidate 3 had similar AUC across crop masks, and similar BACC when given a bes
 
 ### 3.8 Prediction record
 
-`[Table of every prediction and its outcome, from registry.csv. It must include E1, E4, E6, E6c and E10 part A's misses, E5b's missed centre range, and all corrections.]`
+Table 3 lists every dated prediction and its outcome, including misses and later corrections. Only E1 and E4 were dated externally (Milestone 3, 2026-10-05). All other dates are self-reported.
+
+**Table 3. Prediction record.**
+
+| Experiment | Written | Prediction | Outcome |
+|---|---|---|---|
+| E1 | 2026-10-05 | Patient leakage inflates BACC by 1 to 2.5 points | **Missed:** gap +.26 |
+| E4 | 2026-10-05 | ColorJitter adds BACC +.3 to +1.0 and SE +.5 to +1.5 on unseen patients | **Falsified** by its registered rule |
+| E3 | 2026-10-29 | DANet can memorise random patient labels | **Withdrawn:** the runs underfit |
+| E5 | 2026-10-29 | Grad-CAM localisation on MP-IDB | Directionally met, far above prediction. **Reading corrected** by E5b: dependence on a dark object, not learned morphology |
+| E6 | 2026-10-29 | External behaviour by architecture arm | **Falsified** by its registered condition, and the ranking was **withdrawn** after E6b |
+| E7 | 2026-10-29 | Share of genuine label errors among flagged cells | **Reading withdrawn:** cells are flagged, not adjudicated |
+| E9 | 2026-10-29 | Probe BACC 75 to 93, in a stated order | Order **met**, magnitude **missed:** 96.0 to 96.5 |
+| E4b | 2026-10-29 | Colour transfer reduces leakage use in E8b | Primary outcomes met on one seed. **Causal reading withdrawn** |
+| E6b | 2026-11-02 | No robust architecture ranking across five checkpoints | **Supported;** the predicted range for E8c − E1 was missed |
+| E6c | 2026-11-02 | Training-time colour transfer changes little; test-time normalisation helps | **Falsified** on both: +7.05 and −18.75 BACC |
+| E5b | 2026-11-02 | Darkest pixel beats Grad-CAM; a centre rule stays in a stated range | Primary **supported** (15 of 15). Centre range **missed** (63.2) |
+| E8r | 2026-11-02 | LayerNorm's leakage gain replicates, about +.3 | **Not replicated:** +.15 [−.05, .36] |
+| E10 A | 2026-11-02 | Date explains at least 70% of patient colour variance; RedDino shared-date AUC below .75 | First **supported** (86.5%). Second **missed narrowly** (.767) |
+| E10 B | 2026-11-02 | Session gap about +.35, falsified below .29 | **Falsified:** +.24 [−.06, .59], near the MDE, one repeat |
+| E12 | 2026-11-02 | Seed SD 3 to 6 BACC on MP-IDB; NIH SD under .5; fold 2 regresses by at least 3; unused checkpoints agree | SD range **missed high** (6.63). The other three **supported** |
+| E11 | 2026-11-02 | Outcome probabilities in the E11 protocol | `[PENDING E11]` |
+
+E8 carried no prediction, was exploratory, and did not replicate in E8r.
 
 ## 4. Discussion: one outline per E11 outcome
 
@@ -188,16 +211,16 @@ Status: **V** = checked online on 2026-11-02 for this draft, **B** = from the pr
 1. **V** S. Rajaraman et al., Pre-trained convolutional neural networks as feature extractors toward improved malaria parasite detection in thin blood smear images, *PeerJ* 6 (2018) e4568. doi:10.7717/peerj.4568
 2. **B** A. Ali et al., DANet: a lightweight dilated attention network for malaria parasite detection, *Sci. Rep.* 15 (2025) 36689. doi:10.1038/s41598-025-20402-1
 3. **V** A. D'Amour et al., Underspecification presents challenges for credibility in modern machine learning, *J. Mach. Learn. Res.* 23(226) (2022) 1-61.
-4. **C** R. Geirhos et al., Shortcut learning in deep neural networks, *Nat. Mach. Intell.* 2 (2020) 665-673.
+4. **V** R. Geirhos et al., Shortcut learning in deep neural networks, *Nat. Mach. Intell.* 2 (2020) 665-673.
 5. **V** M. Hou et al., MalariaNet: a microcontroller-deployable malaria-microscopy detector for point-of-care biosensing under leakage-free evaluation, *Biosensors* 16(7) (2026) 358. doi:10.3390/bios16070358
 6. **V** M.A. Al Kafi et al., EMFE: a lightweight, explainable machine learning framework for malaria cell classification, arXiv:2608.24793 (2026).
 7. **V** A. Loddo et al., MP-IDB: the malaria parasite image database for image processing and analysis, *LNCS* 11379 (2019) 57-65. doi:10.1007/978-3-030-13835-6_7 (sources give 2018 or 2019: check the Springer page)
-8. **V** J. Hung, A. Carpenter, Applying Faster R-CNN for object detection on malaria images, CVPR Workshops (2017). doi:10.1109/CVPRW.2017.112 (page numbers conflict between sources). Add **C** V. Ljosa et al., Annotated high-throughput microscopy image sets for validation, *Nat. Methods* 9 (2012) 637.
-9. **C** C. Stringer et al., Cellpose: a generic algorithm for cellular segmentation, *Nat. Methods* 18 (2021) 100-106.
-10. **C** E. Reinhard et al., Color transfer between images, *IEEE Comput. Graph. Appl.* 21(5) (2001) 34-41.
-11. **C** M. Oquab et al., DINOv2: learning robust visual features without supervision, arXiv:2304.07193 (2023).
+8. **V** J. Hung, A. Carpenter, Applying Faster R-CNN for object detection on malaria images, CVPR Workshops (2017). doi:10.1109/CVPRW.2017.112 (page numbers conflict between sources). Add **V** V. Ljosa et al., Annotated high-throughput microscopy image sets for validation, *Nat. Methods* 9 (2012) 637.
+9. **V** C. Stringer et al., Cellpose: a generalist algorithm for cellular segmentation, *Nat. Methods* 18 (2021) 100-106.
+10. **V** E. Reinhard et al., Color transfer between images, *IEEE Comput. Graph. Appl.* 21(5) (2001) 34-41. doi:10.1109/38.946629 (Crossref gives issue 4, common citations give issue 5: check IEEE Xplore).
+11. **V** M. Oquab et al., DINOv2: learning robust visual features without supervision, arXiv:2304.07193 (2023).
 12. **V** V. Koch et al., DinoBloom: a foundation model for generalizable cell embeddings in hematology, MICCAI (2024). arXiv:2404.05022
 13. **V** L. Zedda et al., RedDino: a foundation model for red blood cell analysis, MICCAI (2025). arXiv:2508.08180
-14. **C** R.R. Selvaraju et al., Grad-CAM: visual explanations from deep networks via gradient-based localization, ICCV (2017) 618-626.
+14. **V** R.R. Selvaraju et al., Grad-CAM: visual explanations from deep networks via gradient-based localization, ICCV (2017) 618-626.
 
 **Submission checklist.** Abstract at most 250 words. 3-5 highlights of at most 85 characters each, in a separate file. 1-7 keywords. Declaration of AI use before the references. Ethics statement or the reason none is needed. STARD reviewed for the external test. Section chosen at submission (Medical Imaging, or Foundations of AI in Medicine). Graphical abstract and data statement encouraged.

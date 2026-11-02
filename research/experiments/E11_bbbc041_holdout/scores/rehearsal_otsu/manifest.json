@@ -23,6 +23,11 @@
   "cand3_E8c_f2": "65a4622396368cb2a9a78206e3f763d3773998542ae3d8e2fcd83782f5371e99",
   "cand3_E8c_f3": "51a9be0842c36d317a5f9f12cd92fad38b4304872765bd95d239b92a1eff229a",
   "cand3_E8c_f4": "2a5dd9fb03461a841b1bdda79cd5c3594f8983d6972e2f1b1e30537fc2e61ef1",
+  "cand3_resnet_f0": "32aefe2ba5b86ff013fba35525adac83f94b80bbc24723b23b266507d295eb93",
+  "cand3_resnet_f1": "61b415e3e1659113535eb8e6e8050736907e9a8fda3e3c52415c3e98081e8efa",
+  "cand3_resnet_f2": "7a4c9358f0f48039fa55d854362e930b6c5c6c8a445f8c2e5dd7a36cc31f0d50",
+  "cand3_resnet_f3": "32a15af7fe023cb29de4ae842f406bea8ecec18bd06436d1c9076a9180decad3",
+  "cand3_resnet_f4": "5ec58ee619bdb5bcd4021a78708de26012b928830d98949a6f561dad94da7dfa",
   "feature": "fe606f6148f2efe77b0b2e416021b30214e20c361178261e695e1287fae4d5c9"
  },
  "nan_rate": {
@@ -46,6 +51,11 @@
   "cand3_E8c_f2": 0.0,
   "cand3_E8c_f3": 0.0,
   "cand3_E8c_f4": 0.0,
+  "cand3_resnet_f0": 0.0,
+  "cand3_resnet_f1": 0.0,
+  "cand3_resnet_f2": 0.0,
+  "cand3_resnet_f3": 0.0,
+  "cand3_resnet_f4": 0.0,
   "feature": 0.0
  }
 }

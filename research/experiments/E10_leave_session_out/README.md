@@ -1,6 +1,6 @@
 # E10: Leave-session-out split
 
-**Status:** registered 2026-11-02, not yet run (needs Kaggle quota)  ·  **Outcome:** pending
+**Status:** done, one repeat (Kaggle, 2026-11-02 to 11-03)  ·  **Outcome:** prediction 3 falsified under the rule (gap +.24, below the .29 MDE); no claim either way, because the registered limitation asks for a second repeat when the gap sits near the MDE
 
 ## Question
 Does "unseen patient" overstate generalisation when patients imaged in the same session share train and test?
@@ -47,9 +47,28 @@ patients and cells as well as prevalence, because the largest healthy blocks hol
 ## Runs
 | Date | What | Notes |
 |---|---|---|
+| 2026-11-02 | (local) `part_a.py` | Part A, no GPU |
+| 2026-11-02 to 11-03 | Kaggle `e10-e11-e12-batch`, E1 config, session split r0 f0-4 | 5 runs, all return code 0, about 1.04h each |
+| 2026-11-03 | (local) `part_b.py`, `part_b_results.json` | Patient-cluster bootstrap, B=2000 |
 
 ## Result
-**Part A (2026-11-02, `part_a.py`, `part_a_results.json`). Part B pending.** Measures below were fixed in the script
+**Part B (2026-11-03, `part_b.py`, `part_b_results.json`).** Pooled out-of-fold, 27,558 cells, E1 repeat 0 against the
+session split, paired by cell:
+
+| Split | BACC | SE | SP | AUC |
+|---|---|---|---|---|
+| Patient-grouped | 96.78 | 96.01 | 97.55 | .9924 |
+| Session-grouped | 96.54 | 95.96 | 97.13 | .9925 |
+| Gap, grouped minus session | **+.24 [-.06, .59]** | +.05 [-.48, .72] | +.42 [.11, .74] | -.0001 [-.0009, .0007] |
+
+Session-grouped BACC by test fold: 97.58, 94.11, 97.06, 96.87, 97.13. Fold 1 is low because of its sensitivity (SE 90.8);
+this was not investigated. False positives on healthy-only patients: 1.96% grouped, 2.20% session.
+
+| Prediction | Outcome |
+|---|---|
+| 3. Gap about +.35, range 0 to +.8, falsified below .29 | **Falsified by the registered line:** +.24 is below .29 and its CI includes 0. It is inside the plausible range |
+
+**Part A (2026-11-02, `part_a.py`, `part_a_results.json`).** Measures below were fixed in the script
 before it ran. Cells: 13,665 Uninfected cells with E7 flags removed.
 
 | Prediction | Outcome |
@@ -63,4 +82,14 @@ are indicative only: 39 pairs over 4 dates, three of which hold a single healthy
 of the colour signal sits at date level.
 
 ## Verdict and what we learned
-Pending.
+**Prediction 3 is falsified, and the rule does not call session leakage real.** The gap is below E1's MDE and its CI
+includes 0. On this one repeat, moving to session-held-out folds did not materially change DANet's cell-level BACC, and
+ranking did not move at all (AUC gap -.0001).
+
+**This is not evidence that session leakage is absent.** The estimate sits close to the MDE, the CI reaches +.59, and the
+protocol's limitation says a gap near the MDE needs a second repeat before any claim. No second repeat was run. The patient-grouped
+results are therefore not reported as optimistic, and they are not reported as cleared either. The only secondary interval that
+excludes 0 is specificity (+.42 [.11, .74]). It was not a registered test and is not adjusted for multiple comparisons.
+
+Part A still stands: date carries most of the colour signal patient carries. Together, A and B say the batch signal is real in
+the data but costs DANet little on NIH at the cell level, within the limits of one repeat. Date is only a proxy for session.

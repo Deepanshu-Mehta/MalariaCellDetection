@@ -146,10 +146,10 @@ for planning the write-up.
 - E3: inconclusive on capacity. The runs underfit (final train_acc at most 0.60 in 6 of 10) and there is no LN arm.
 
 **The honest framing for the paper:** DANet's headline accuracy is not explained by patient leakage under patient-grouped
-splits (E1), though session leakage is untested (E10). DANet matches a generic ResNet-18 (E1r) and sits within a point of
+splits (E1). Session-held-out folds gave a gap of +.24 [-.06, .59] on one repeat (E10), below the MDE, so session leakage is neither called real nor ruled out. DANet matches a generic ResNet-18 (E1r) and sits within a point of
 frozen features (E9). The norm layer changes how much in-domain leakage it exploits (E8), on exploratory evidence
 (**did not replicate in E8r, 2026-11-02**). No
-architecture ranking is shown on MP-IDB (E6b), while retraining on different patients moves results widely, and
+architecture ranking is shown on MP-IDB (E6b), while retraining moves results widely, even with the training patients fixed (E12: seed SD 6.63 [4.48, 12.71] on MP-IDB, .18 on NIH), and
 training-time colour transfer helps (E6c). A one-feature baseline is competitive on curated crops (exploratory, needs
 BBBC041). Report these as separately scoped claims, keeping the falsified ones on record.
 

@@ -90,6 +90,20 @@ candidate 1. **Check, fixed now:** candidates 2 and 3 are also rehearsed on both
 either candidate's AUC is more than .01 higher on Otsu crops, in which case Otsu becomes primary. The result is recorded here
 before scoring.
 
+**Update, 2026-11-03, all 20 candidate 3 members, on MP-IDB, before any BBBC041 score. No BBBC041 metric exists. The predictions are not revised.**
+
+| Crops | Feature AUC / BACC | Candidate 2 AUC / BACC | Candidate 3 AUC / BACC (SE) | Candidate 3 best-threshold BACC* | Delta AUC, 3 minus 1 | Delta BACC, 3 minus 1 | Rule on MP-IDB |
+|---|---|---|---|---|---|---|---|
+| Cellpose (reference) | .987 / 93.0 | .919 / 73.8 | .982 / 83.8 (68.0) | 94.5 | -.005 | -9.2 | not run |
+| Ellipse | .982 / 93.9 | .932 / 67.2 | .982 / 78.8 (58.2) | 95.3 | .000 [-.006, .006] | -15.1 [-19.8, -10.6] | Feature holds |
+| Otsu | .969 / 90.3 | .909 / 78.4 | .981 / 91.1 (83.4) | 94.2 | +.012 [.005, .019] | +.8 [-1.2, 2.7] | Inconclusive |
+
+*Upper bound only, chosen on the same data, from 2,001 quantile thresholds. **Correction:** the Otsu feature AUC is .9695, which rounds to .969; the table below prints .970.
+
+The ResNet-18s narrow candidate 3's crop swing from 19.5 to 12.3 BACC, and median parasite logit moves to +.65 on ellipse and +2.22 on Otsu. The two crop rules still give different outcomes,
+so under the amended rule MP-IDB itself would read "Depends on crop rule". Single ResNet-18 members scored BACC 78.9 to 86.5 on ellipse and 78.7 to 85.1 on Otsu, so they moved far less with the crop
+than the DANets did (exploratory). The registered check still passes, since neither candidate's AUC is higher on Otsu crops (candidate 3: .9819 ellipse, .9810 Otsu), and the ellipse stays primary.
+
 **Rehearsal result, 2026-11-02, on MP-IDB, before any BBBC041 score. No BBBC041 metric exists.** Candidate 3 has 15 of its 20 members here, because the ResNet-18s are
 still training.
 

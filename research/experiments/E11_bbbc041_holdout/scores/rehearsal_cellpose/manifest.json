@@ -1,0 +1,19 @@
+{
+ "table_sha256": "38207aefb539c9fdf6041a8e6191b267e98e788fcf2747b0b0c9d484eedf8b95",
+ "crop_ids_sha256": "e808e681fabe4eb4d905c61004678cfbb5ce6a3a236637dc50181e9b7267431f",
+ "n": 14468,
+ "files": {
+  "cand3_resnet_f0": "868e8c952ef0f8182cdc32fe4130fb98c7a32ce7ac22d7f01dd61179c3a0d3c1",
+  "cand3_resnet_f1": "fa04ddee7c0eec42295d5e629301bb635be6355b363d402b04f7ee5074ded8f8",
+  "cand3_resnet_f2": "0500c0cfd50b70e8434b6d4bf5e9e56dae7f4fa04b6d60da7a792f17af7badc7",
+  "cand3_resnet_f3": "3256bcfd72949c29fe1204e12e6db92727061fb1611a3d2c4740849101d1564d",
+  "cand3_resnet_f4": "c69d0c1d919da0de2e6fdc16c237bd5a55ec95a05d9b3aeb701a126b411bd5a8"
+ },
+ "nan_rate": {
+  "cand3_resnet_f0": 0.0,
+  "cand3_resnet_f1": 0.0,
+  "cand3_resnet_f2": 0.0,
+  "cand3_resnet_f3": 0.0,
+  "cand3_resnet_f4": 0.0
+ }
+}

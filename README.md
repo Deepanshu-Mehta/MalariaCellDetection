@@ -151,7 +151,7 @@ the original text rather than replacing it. **Exploratory** marks anything not p
 
 | Question | Current evidence | Experiments | Status |
 |---|---|---|---|
-| Does patient leakage inflate the score? | Barely under patient-grouped CV: gap +0.26 BACC, far below M3's prediction. Imaging sessions still cross folds | E1, E10 | Patient level done; session level pending |
+| Does patient leakage inflate the score? | Barely under patient-grouped CV: gap +0.26 BACC, far below M3's prediction. Session-held-out folds: gap +.24 [-.06, .59], below the MDE, one repeat | E1, E10 | Patient level done; session level not called real and not ruled out |
 | Is DANet better than simple references? | About equal to ResNet-18; frozen foundation-model probes reach 96.0-96.5 BACC vs 96.8 | E1r, E9 | Done |
 | Does ColorJitter help on unseen patients? | No: M3's hypothesis is falsified by its own rule | E4 | Done |
 | Does the norm layer change leakage use? | LayerNorm gap +0.63 vs InstanceNorm +0.02; new seeds LN-IN +.15 [-.05, .36] | E8, E8r | **Not replicated** under the registered rule; stays exploratory |
