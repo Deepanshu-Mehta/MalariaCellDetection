@@ -111,6 +111,10 @@ models' threshold does: candidate 3's median parasite logit is -.36 on ellipse, 
 DinoBloom's low MP-IDB AUC (.687 on ellipse crops) is therefore real, not a loading error. The ResNet-18 path agrees with saved NIH predictions on 99.9% of 1,024 calls. The 8-bit cache
 agrees with E6b's 16-bit path on 99.9% of MP-IDB calls, with an AUC difference of .0002. Fitted probe hashes are added to `frozen_manifest.json`, and `score.py` asserts them.
 
+**Box tightness, 2026-11-02, from Otsu mask geometry only (no labels, model or feature).** An earlier draft protocol added a 4 px margin, and the rehearsal boxes are tight boxes plus 4 px, so this was
+checked. Median gap between mask and box as a share of box side: MP-IDB rehearsal 3.2%, BBBC041 PNG 2.5%, JPG 2.7%. Median mask fill: .66, .67, .66. The annotated boxes behave like the rehearsal boxes, so no
+margin is added.
+
 **Order of work.** (1) Rehearse the exact scoring script on MP-IDB crops. (2) Build BBBC041 crops. (3) Audit 100 crops by eye
 with no model or feature scores in view, recording only whether a crop is usable. (4) Score, then save and hash every score file
 before any metric exists. Labels stay in a separate file the scoring script does not read. (5) Calculate once and apply the rule.

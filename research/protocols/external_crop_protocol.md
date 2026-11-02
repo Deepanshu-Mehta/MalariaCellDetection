@@ -55,6 +55,9 @@ plain accuracy. **RedDino was pre-trained on MP-IDB**, so any RedDino result on 
 
 ## BBBC041 *P. vivax* (secondary external set)
 
+> **Superseded 2026-11-02 by `experiments/E11_bbbc041_holdout/README.md`.** E11 does not subsample, adds no 4 px margin, uses two crop rules (inscribed ellipse and green-channel Otsu), and keeps
+> leukocytes as secondary hard negatives. Mask geometry shows annotated boxes are about as tight as the MP-IDB rehearsal boxes, so no margin is needed. The original text stays below for the record.
+
 Source: [BBBC041](https://bbbc.broadinstitute.org/BBBC041) (CC BY-NC-SA 3.0, 2.26 GB), 1,364 Giemsa images,
 ≈80k cells with boxes and classes: red blood cell, leukocyte, ring, trophozoite, schizont, gametocyte, difficult.
 
