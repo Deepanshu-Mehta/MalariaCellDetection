@@ -1,6 +1,6 @@
 # E11: BBBC041 single-shot holdout
 
-**Status:** registered 2026-11-02, amended the same day before any score, not scored  ·  **Outcome:** pending
+**Status:** done, scored once on 2026-11-03  ·  **Outcome:** **Trained model wins**, on both crop rules. The feature's fixed threshold failed on the PNG group; prediction 2 falsified
 
 > **Amendment, 2026-11-02, decided by the authors before any BBBC041 score or metric existed.** Reason: the MP-IDB rehearsal under Protocol showed the crop rule alone
 > decides the outcome. The five-way rule below now runs twice, once on ellipse crops and once on Otsu crops, each with candidates 1 and 3 scored on those crops and its own bootstrap.
@@ -144,9 +144,75 @@ false-positive rate; E12 retrains; candidate 2 versus candidate 1.
 |---|---|---|
 | 2026-11-02 | `build_crops.py` | 86,035 boxes, 79,722 kept: 2,425 parasitized, 77,194 uninfected, 103 leukocytes; prevalence 3.05%. Excluded: 4,344 red cells intersecting a parasite box, 1,523 border boxes, 446 difficult. All image checksums match. Otsu fell back to the full box on 138 crops |
 | 2026-11-02 | Crop audit, ellipse rule | 50 parasitized and 50 uninfected crops drawn by seeded RNG (`audit_sample.csv`), viewed with no scores. Done by the AI assistant, not an expert. All 100 contain their target cell, and none is a gross failure. About 8 of 50 uninfected crops show a dark neighbouring cell inside the ellipse. Parasitized crops show the same crowding. Two colour families are visible. Nothing was excluded or changed as a result |
+| 2026-11-03 | (local) `score.py`, ellipse (28 files) then Otsu (26 files) | 04:20 to 11:27 IST, no retries. Reads no labels |
+| 2026-11-03 | Integrity checks, then commit `45c7c4d` of both manifests | 79,722 rows each, crop-order hash matches, every file hash matches, NaN rate 0 |
+| 2026-11-03 | `calculate.py` once per crop rule, then `--final` | 11:27 to 11:34 IST. No rescore |
 
 ## Result
-Pending.
+**Registered analysis, run once (2026-11-03, `results_bbbc041_ellipse.json`, `results_bbbc041_otsu.json`, `results_outcome.json`).**
+Primary set: 79,619 crops (2,425 parasitized, prevalence 3.05%), 1,328 images, all 20 candidate 3 members.
+
+| Candidate | Ellipse AUC | BACC | SE | SP | PPV | Otsu AUC | BACC | SE | SP | PPV |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1. Dark-spot feature | .909 | 61.3 | 99.7 | 22.9 | 3.9 | .906 | 64.4 | 99.3 | 29.6 | 4.2 |
+| 2. E1 ensemble | .966 | 87.9 | 98.4 | 77.4 | 12.0 | .975 | 81.8 | 99.8 | 63.8 | 8.0 |
+| 3. Colour-transfer ensemble | **.977** | **92.1** | 92.3 | 91.9 | 26.4 | **.980** | **89.2** | 98.9 | 79.5 | 13.2 |
+| 4. DINOv2 probe (descriptive) | .936 | 77.3 | 97.2 | 57.5 | 6.7 | | | | | |
+| 4. DinoBloom probe (descriptive) | .694 | 63.6 | 81.3 | 45.9 | 4.5 | | | | | |
+
+| Delta, 97.5% CI | Ellipse | Otsu |
+|---|---|---|
+| AUC, 3 minus 1 | **+.068 [.053, .084]** | **+.074 [.058, .090]** |
+| BACC, 3 minus 1 | **+30.8 [29.8, 31.9]** | **+24.8 [23.7, 25.7]** |
+| AUC, 2 minus 1 (secondary) | +.056 [.043, .071] | +.069 [.055, .084] |
+| BACC, 2 minus 1 (secondary) | +26.6 [25.6, 27.6] | +17.4 [16.5, 18.3] |
+| AUC, 3 minus 2 (secondary) | +.011 [.007, .017] | +.005 [.001, .008] |
+
+**Outcome rule:** both lower bounds clear their margins (+.01 AUC, +2 BACC) on both crop rules, so each rule gives "Trained model wins",
+and so does the amended combination.
+
+**By acquisition group (ellipse; Otsu is similar):**
+
+| Group | Crops | Feature AUC / BACC | Candidate 2 AUC / BACC | Candidate 3 AUC / BACC |
+|---|---|---|---|---|
+| PNG, 1,208 images | 74,489 | .957 / 58.9 | .968 / 87.6 | .974 / 91.5 |
+| JPG, 120 images | 5,233 | .990 / 96.4 | .997 / 95.6 | .999 / 98.4 |
+
+**Sensitivity by stage, ellipse / Otsu:** feature 98.5-100 on every stage under both rules. Candidate 3: rings 75.1 / 95.8, trophozoites 96.5 / 99.7,
+schizonts 100 / 100, gametocytes 98.1 / 99.4. **Leukocytes flagged (n = 103):** feature 99.0 / 98.1%, candidate 2 98.1 / 87.4%, candidate 3 23.3 / 24.3%.
+
+**Prediction scorecard:**
+
+| # | Prediction | Result | Outcome |
+|---|---|---|---|
+| 1 | Feature holds 45%, Inconclusive 25%, Trained wins 15%, Disagree 10%, No transfer 5% (addendum: Trained wins 5%) | Trained model wins | **Wrong:** the outcome had 15% (5% in the addendum) |
+| 2 | Candidate 1 AUC .85-.95, BACC 78-90, SE 80-95, SP 70-92 | .909, 61.3, 99.7, 22.9 | **Falsified:** AUC in range, BACC, SE and SP out |
+| 3 | Candidate 3 AUC .82-.93, BACC 65-85, beats candidate 2 on AUC by at least .02 | .977, 92.1; +.011 | **Missed:** both ranges exceeded, margin over candidate 2 smaller |
+| 4 | Both probes below candidate 3 on AUC | .936 and .694 against .977 | **Supported** |
+| 5 | Candidate 1 fires on at least 60% of leukocytes | 99.0% | **Supported** |
+| 6 | Candidate 1 PPV under 60% | 3.9% | **Supported** |
+| 7 | Candidate 1 BACC differs by at least 3 between PNG and JPG | 58.9 against 96.4 | **Supported** |
+
+**Exploratory, computed after the registered analysis.** The feature's failure is its threshold on the PNG group. On PNG crops the median
+uninfected score is .486 against the frozen .3047, so 82% of uninfected PNG cells are called (ellipse; 75% on Otsu). On JPG crops the median
+is .111 and only 4.5% are called. A threshold chosen on BBBC041 itself would still give the feature only 84.8 BACC (Otsu 84.3), because the
+two groups need different thresholds, while candidate 3's best-case BACC is 92.3 (93.5), close to its fixed-threshold value. Why PNG cells score
+higher was not investigated.
 
 ## Verdict and what we learned
-Pending.
+**Trained model wins, under both crop rules, by wide margins.** The outcome had 15% in the original prediction and 5% in the addendum, and
+the writer's leading expectation, Feature holds, was wrong. MP-IDB rehearsal pointed the other way, so a development dataset reused many
+times was a poor guide to a new one.
+
+**The feature failed through its threshold, not its ranking.** Its AUC stayed inside the predicted range, and on the JPG group it nearly matched
+the ensembles. On the PNG group, which holds 93% of crops, the NIH-fitted threshold called most uninfected cells: SE 99.7, SP 22.9, the same
+pattern as MalariaNet's published BBBC041 result (SE 96.4, SP 18.0). One fixed measurement does not carry its operating point across
+acquisition conditions, and NIH and MP-IDB could not reveal that.
+
+**The colour-transfer ensemble kept both ranking and operating point** (BACC 92.1 and 89.2, with best-case values within 0.2 and 4.3), and it
+rejected about three quarters of leukocytes, which the other candidates mostly called parasitized. Its margin over the plain E1 ensemble was small on
+AUC (+.011 and +.005) but larger on BACC (+4.2 and +7.4, no CI computed). Its weak point is rings on ellipse crops (SE 75.1).
+
+**What this does not show.** It does not show that the models learned parasite morphology, since E5b still stands. It does not separate species,
+stain and acquisition as causes, because they change together. It is one dataset, and PPV is only 13 to 26% at 3% prevalence, so no result here supports
+clinical use.

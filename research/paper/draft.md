@@ -5,10 +5,17 @@
 Deepanshu Mehta, Agrapujya Lashkari. Affiliation and corresponding author to be added.
 
 > **Note to authors.** The AI assistant drafted this text. Journal policy requires the manuscript to reflect your own analysis, interpretation, insights and ideas, so read every claim against
-> `research/registry.csv` and rewrite it in your own words before submission. `[PENDING]` marks results that do not exist yet. No BBBC041 result exists in this draft.
+> `research/registry.csv` and rewrite it in your own words before submission. `[PENDING]` marks results that do not exist yet. The BBBC041 result was calculated once on 2026-11-03 and is final.
 
 ## Abstract
-`[PENDING: at most 250 words, written after E11. Keep one claim per sentence, and state the one-shot outcome first.]`
+Malaria cell classifiers report near 98% accuracy on the NIH thin-smear benchmark, but such scores may not show what transfers. We reproduced DANet and audited its score with dated predictions, patient- and session-grouped splits, retraining with new seeds, and external development on MP-IDB. We then froze four candidates, a one-feature dark-spot rule fitted on NIH, two trained ensembles and two foundation-model probes, and tested them once on BBBC041 (*P. vivax*; 79,619 cells; 3.05% prevalence) under a pre-specified outcome rule applied to two crop rules. A colour-transfer ensemble beat the feature under both crop rules, with AUC .977 against .909 and balanced accuracy 92.1 against 61.3 on ellipse crops. The differences were +.068 [.053, .084] and +30.8 [29.8, 31.9] points. Our leading prediction, that the feature would hold, was wrong. The feature kept its ranking but not its NIH-fitted threshold, calling 82% of uninfected cells in the larger acquisition group. On NIH, the feature came within about one point of DANet, patient leakage changed balanced accuracy by +.26 points, and the session effect (+.24 [−.06, .59]) stayed below our detection limit. On MP-IDB, retraining with only a new seed moved balanced accuracy with SD 6.63, against .18 on NIH. NIH accuracy mostly reflects a strong, simple cue, and neither NIH nor a reused development set predicted behaviour on a new dataset. External tests should use frozen candidates and ensembles, and report threshold-free and fixed-threshold results together.
+
+**Highlights (each at most 85 characters):**
+- A one-feature rule nearly matched DANet on NIH but lost its threshold on BBBC041
+- Colour-transfer ensembles won a frozen one-shot test on a new dataset
+- Seed alone moved external balanced accuracy by SD 6.6, against 0.2 on NIH
+- Patient leakage changed NIH balanced accuracy by only 0.26 points
+- Every prediction was dated before its run, and misses stay on record
 
 **Keywords (1-7):** malaria; blood smear; external validation; shortcut learning; underspecification; reproducibility
 
@@ -143,7 +150,23 @@ Candidate 3 had almost identical AUC across crop masks (.981 to .982), and simil
 
 ### 3.7 One-shot test on BBBC041
 
-`[PENDING E11. Report in this order: integrity checks; candidate table for both crop rules; delta with 97.5% CIs; the outcome; by stage and group; leukocytes; PPV at 3.05% prevalence; probes.]`
+Both crop rules were scored in full: 79,722 crops each, crop order and file hashes verified, no missing values and no rescore. Both score manifests were committed before any metric was calculated, and each crop rule was calculated once. The primary set held 79,619 cells from 1,328 images, with 2,425 parasitized (3.05%).
+
+**Table 4. BBBC041, one-shot.** Thresholds frozen on NIH. PPV at the natural 3.05% prevalence.
+
+| Candidate | Ellipse AUC / BACC | SE / SP | PPV | Otsu AUC / BACC | SE / SP | PPV |
+|---|---|---|---|---|---|---|
+| 1. Dark-spot feature | .909 / 61.3 | 99.7 / 22.9 | 3.9 | .906 / 64.4 | 99.3 / 29.6 | 4.2 |
+| 2. E1 ensemble | .966 / 87.9 | 98.4 / 77.4 | 12.0 | .975 / 81.8 | 99.8 / 63.8 | 8.0 |
+| 3. Colour-transfer ensemble | .977 / 92.1 | 92.3 / 91.9 | 26.4 | .980 / 89.2 | 98.9 / 79.5 | 13.2 |
+| 4. DINOv2 probe | .936 / 77.3 | 97.2 / 57.5 | 6.7 | not run | | |
+| 4. DinoBloom probe | .694 / 63.6 | 81.3 / 45.9 | 4.5 | not run | | |
+
+Candidate 3 minus candidate 1 was +.068 [.053, .084] AUC and +30.8 [29.8, 31.9] BACC on ellipse crops, and +.074 [.058, .090] and +24.8 [23.7, 25.7] on Otsu crops (97.5% CIs). Both lower bounds cleared their margins under both crop rules, so the registered outcome is **Trained model wins**. We had given this outcome 15% (5% in the addendum) and expected the feature to hold.
+
+The feature failed through its threshold. On the JPG group (120 images) it reached AUC .990 and BACC 96.4, close to candidate 3 (.999, 98.4). On the PNG group (1,208 images, 93% of cells) its AUC was .957 but its BACC was 58.9, because the NIH-fitted threshold called 82% of uninfected cells (exploratory). A threshold chosen on BBBC041 itself would have raised it only to 84.8, since the two groups needed different thresholds (exploratory). Candidate 3's fixed threshold was close to its best case (92.1 against 92.3).
+
+Sensitivity by stage was 98.5 to 100 for the feature at every stage. For candidate 3 it was lowest for rings on ellipse crops (75.1; Otsu 95.8) and at least 96.5 otherwise. Of 103 leukocytes, the feature flagged 99.0% and candidate 2 98.1%, while candidate 3 flagged 23.3% (Otsu: 98.1, 87.4 and 24.3%). Both probes ranked below candidate 3, and DinoBloom ranked poorly, as on MP-IDB.
 
 ### 3.8 Prediction record
 
@@ -168,26 +191,27 @@ Table 3 lists every dated prediction and its outcome, including misses and later
 | E10 A | 2026-11-02 | Date explains at least 70% of patient colour variance; RedDino shared-date AUC below .75 | First **supported** (86.5%). Second **missed narrowly** (.767) |
 | E10 B | 2026-11-02 | Session gap about +.35, falsified below .29 | **Falsified:** +.24 [−.06, .59], near the MDE, one repeat |
 | E12 | 2026-11-02 | Seed SD 3 to 6 BACC on MP-IDB; NIH SD under .5; fold 2 regresses by at least 3; unused checkpoints agree | SD range **missed high** (6.63). The other three **supported** |
-| E11 | 2026-11-02 | Outcome probabilities in the E11 protocol | `[PENDING E11]` |
+| E11 | 2026-11-02 | Feature holds most likely (45%); feature BACC 78 to 90; candidate 3 BACC 65 to 85 | **Wrong:** Trained model wins (15%). Feature BACC **missed** (61.3), candidate 3 **missed high** (92.1). Probe, leukocyte, PPV and group predictions **supported** |
 
 E8 carried no prediction, was exploratory, and did not replicate in E8r.
 
-## 4. Discussion: one outline per E11 outcome
+## 4. Discussion
 
-Use exactly one. The outcome is set by the rule, and the outline must not be swapped afterwards.
+The outcome was fixed by a rule written before scoring, and so was the Discussion it selects: six outlines were drafted in advance, and this is the one for "Trained model wins".
 
-**Common ground, whatever the outcome.** NIH accuracy near 97% mostly reflects a task with a strong, simple cue; DANet adds a real but small margin; patient leakage is small; a single checkpoint is a poor unit of evidence externally; ranking and threshold fail differently.
+**On a dataset that played no part in development, trained ensembles beat a single NIH-fitted measurement, on ranking and on fixed-threshold accuracy, under both crop rules.** Our leading prediction was that the feature would hold. It did not, and the margins were wide.
 
-| E11 outcome | Headline | Main argument | What it does not show |
-|---|---|---|---|
-| **Feature holds** (both crop rules) | One NIH-fitted measurement matches trained ensembles on a new species | NIH training adds little that transfers. Baselines of this kind should be mandatory | Clinical readiness, or that models cannot do better with target data |
-| **Trained model wins** (both) | Trained ensembles keep something a simple cue lacks | On curated NIH the gap is small, but it widens under shift. Colour transfer matters | That the models learned morphology: E5b still stands |
-| **Ranking and threshold disagree** (both) | Good ranking does not give a usable operating point | External validation must report threshold-free and fixed-threshold results together. Local calibration is needed | Which candidate is better overall |
-| **Depends on crop rule** | The verdict turns on preprocessing | The result is itself the finding: preprocessing, invisible on NIH, can decide an external comparison, so papers must report it | Any ranking of candidates. We make no such claim |
-| **No transfer** | Neither approach survives species and stain shift | NIH-trained classifiers and NIH-fitted cues do not carry over. It matches MalariaNet's result | That the methods fail on *P. falciparum* elsewhere |
-| **Inconclusive** | The test could not separate them | State the CI widths plainly, and report what they exclude. Do not lean on point estimates | Equivalence |
+On curated NIH crops the gap between a trained model and the feature is about one point. Under shift to BBBC041 it grew to 25 to 31 points of balanced accuracy. Most of that came from the operating point, not the ranking: the feature's AUC stayed above .90, and on the smaller acquisition group it nearly matched the ensembles. On the larger group its NIH threshold called most uninfected cells, the same pattern MalariaNet reported on BBBC041 (sensitivity 96.4%, specificity 18.0%) [5]. A fixed cue can keep its ranking and still lose its threshold, and neither NIH nor MP-IDB revealed this.
 
-**Limitations to state in every case.** Prediction dates are self-reported. Date is a proxy for session. E7's flagged cells were not reviewed by an expert. MP-IDB was reused for development, so its feature results are exploratory. The crop audit was done by an AI assistant, not a microscopist. BBBC041's boxes are not masks. Species, stage mix and stain all change at once, so
+Colour transfer mattered. Of the two trained ensembles, the colour-transfer one had the higher AUC under both crop rules and kept a usable threshold, and it was the only candidate that rejected most leukocytes. This fits E6c, where colour transfer helped on MP-IDB. But E12 showed that a new seed alone moves external balanced accuracy with an SD of 6.6, so we tested ensembles, and a single checkpoint might not repeat this result.
+
+Development data misled us. Rehearsal on MP-IDB, reused for many decisions including the feature's discovery, favoured the feature on ellipse crops. BBBC041 reversed that. External claims should rest on data untouched by development, with candidates frozen and hashed before scoring.
+
+**Common ground.** NIH accuracy near 97% mostly reflects a task with a strong, simple cue. DANet adds a real but small margin on NIH. Patient leakage is small, and the session effect is unresolved at one repeat. A single checkpoint is a poor unit of evidence externally. Ranking and threshold fail differently, for trained models on MP-IDB and for the feature on BBBC041.
+
+**What this does not show.** It does not show that the models learned parasite morphology: E5b found that a no-model rule pointing to the darkest pixel hit parasites more often than Grad-CAM. It cannot assign the shift to species, stain or acquisition, which change together. It is one dataset, and PPV of 13 to 26% at 3% prevalence rules out any claim of clinical use.
+
+**Limitations.** Prediction dates are self-reported. Date is a proxy for session. E7's flagged cells were not reviewed by an expert. MP-IDB was reused for development, so its feature results are exploratory. The crop audit was done by an AI assistant, not a microscopist. BBBC041's boxes are not masks. Species, stage mix and stain all change at once, so
 transfer failures cannot be assigned to one cause. Curated crops are not a field workflow, and no result here supports clinical use.
 
 ## Declarations

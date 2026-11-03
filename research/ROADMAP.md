@@ -150,7 +150,7 @@ splits (E1). Session-held-out folds gave a gap of +.24 [-.06, .59] on one repeat
 frozen features (E9). The norm layer changes how much in-domain leakage it exploits (E8), on exploratory evidence
 (**did not replicate in E8r, 2026-11-02**). No
 architecture ranking is shown on MP-IDB (E6b), while retraining moves results widely, even with the training patients fixed (E12: seed SD 6.63 [4.48, 12.71] on MP-IDB, .18 on NIH), and
-training-time colour transfer helps (E6c). A one-feature baseline is competitive on curated crops (exploratory, needs
+training-time colour transfer helps (E6c). **E11, 2026-11-03: on BBBC041, scored once, the colour-transfer ensemble beat the dark-spot feature on both crop rules (Trained model wins); the feature kept its ranking but not its NIH threshold.** A one-feature baseline is competitive on curated crops (exploratory, needs
 BBBC041). Report these as separately scoped claims, keeping the falsified ones on record.
 
 ## 7. Phase 2: revised priorities (not yet started)

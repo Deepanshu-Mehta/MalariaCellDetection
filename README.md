@@ -159,7 +159,7 @@ the original text rather than replacing it. **Exploratory** marks anything not p
 | Does colour invariance help externally? | Training-time colour transfer: BACC +7.05, AUC +0.059. Test-time Reinhard normalisation harmed all arms | E6c | Done |
 | Are explanations trustworthy? | They land on annotated parasites, but so does a darkest-pixel rule | E5 | Narrowed; NIH question open |
 | Are the labels noisy? | 312 cells (1.13%) flagged; some sit in healthy-only patients | E7 | Needs expert review |
-| How far does one hand-made feature go? | NIH AUC .981; MP-IDB AUC .987. Worse than DANet on NIH healthy patients (false positives about 3.6% vs 2.0%) | exploratory | Needs BBBC041 |
+| How far does one hand-made feature go? | NIH AUC .981; MP-IDB AUC .987. On BBBC041, scored once with frozen candidates, it lost to a colour-transfer ensemble on both crop rules (BACC 61.3 vs 92.1, AUC .909 vs .977): its NIH threshold called 82% of uninfected cells in the PNG group | E11 | Done: Trained model wins |
 
 **Dataset caveats found so far:** cell count alone separates infected from healthy-only patients (AUC .992), because every
 patient has about 68 uninfected cells. Infection status is also heavily confounded with imaging date: only 7 of 50
