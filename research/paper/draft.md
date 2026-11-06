@@ -56,14 +56,14 @@ For BBBC041, ring, trophozoite, schizont and gametocyte boxes were labelled Para
 
 ### 2.2 Splits
 
-All patient-level splits were built before training and hashed. **Grouped:** five folds over patients, three repeats, balanced across four strata. **Leaky:** the original random cell-level 70/10/20 split. **Session:** patients sharing any imaging date
+All patient-level splits were built before training and hashed. **Grouped:** five folds over patients, three repeats, balanced across four strata. **Leaky:** a random cell-level 70/10/20 split (seed 42), our reconstruction of DANet's unseeded split. **Session:** patients sharing any imaging date
 (from file names) were linked into blocks by connected components, giving 50 blocks. Whole blocks were assigned to five folds, so training, validation and test sets share no date. Test folds held 8 to 13 healthy patients, with test prevalence SD .10
 percentage points. Date is a proxy for session.
 
 ### 2.3 Models
 
 **DANet.** We used DANet-S with the authors' published code (softmax gate, cascaded dilations, InstanceNorm; arm E1) and a paper-faithful variant (sigmoid gate, parallel dilations) with LayerNorm (E8b) or InstanceNorm (E8c). Training used RMSprop with a
-one-cycle schedule, maximum learning rate .001, batch size 64, 224 px and 50 epochs. **ResNet-18.** ImageNet weights, AdamW, 128 px, 15 epochs. **Colour transfer.** During training only, with probability .5, a cell was recoloured to another training patient's
+one-cycle schedule, maximum learning rate .001, batch size 64, 224 px and 50 epochs, negative log-likelihood loss, rotation (±15°) and flip (p = .2) augmentation, keeping the checkpoint with the lowest validation loss. The paper's listed learning rate (.01) did not train. **Ablations (E13).** E13a removes the attention path of every Dilated Attention Block, leaving its 1×1 projection (42,778 parameters); E13b replaces the average-pool head with a max pool. **ResNet-18.** ImageNet weights, AdamW, 128 px, 15 epochs. **Colour transfer.** During training only, with probability .5, a cell was recoloured to another training patient's
 statistics by Reinhard transfer [10] in LAB space, foreground only. **Frozen probes.** Logistic regression on DINOv2 [11], DinoBloom [12] and RedDino [13] embeddings. RedDino was not used externally, because it was trained on MP-IDB and its training list could not be
 confirmed free of BBBC041.
 
@@ -93,8 +93,7 @@ Scores were saved and hashed before any metric was computed. A rescore was allow
 
 ### 2.6 Statistics
 
-Primary metrics were balanced accuracy (BACC), sensitivity (SE), specificity (SP) and AUC. Cells from one patient or image are not independent, so NIH intervals resample patients and external intervals resample images. Where several checkpoints are compared, the bootstrap also resamples folds. E1's minimum detectable effect of .29 BACC points
-was used as the threshold for meaningful change on NIH.
+Primary metrics were balanced accuracy (BACC), sensitivity (SE), specificity (SP) and AUC. Cells from one patient or image are not independent, so NIH intervals resample patients and external intervals resample images. Where several checkpoints are compared, the bootstrap also resamples folds. An A/A test between runs differing only in seed gave a noise floor of .29 BACC points (2.8 times the paired SE), which we call the minimum detectable effect (MDE) and use as a practical-relevance threshold on NIH. It is not a power calculation: an effect below it can have a CI that excludes zero, and we report such effects as real but too small to matter.
 
 ### 2.7 Predictions and corrections
 
@@ -116,6 +115,8 @@ Patient leakage barely changed DANet's score: leaky BACC 96.96 ± .20 against gr
 
 DANet matched a generic ResNet-18 on unseen patients (96.58 ± .05; paired difference +.13 [−.05, .30]), and frozen probes came within a point (DINOv2 96.03, DinoBloom 96.31, RedDino 96.45). DANet's margin over RedDino was above zero on repeat 0 only.
 
+**Architecture ablation (E13).** Removing attention cost −.74 BACC [−1.08, −.43], lower on all five folds and almost all through sensitivity (−1.47; SP −.01), so a network with 1.9% of DANet's parameters still reached 96.04. A max-pool head cost −.19 [−.37, −.01], a CI that excludes zero but an effect below the MDE. One seed per arm.
+
 An early finding did not hold up. LayerNorm gained more from leakage than InstanceNorm on seeds 42-44 (leaky BACC 97.34 against 96.80, exploratory). A registered replication on new seeds gave a mean paired difference of +.15 [−.05, .36], and the claim was not replicated under our rule. We make no claim that the norm layer controls leakage use.
 
 ### 3.3 A single measurement on NIH
@@ -132,7 +133,7 @@ single-checkpoint result was not representative. These hits show dependence on a
 No architecture ranking survived five checkpoints per arm (E8b − E1: +1.67 [−1.98, 5.42]; E8c − E1: −2.14 [−7.84, 3.24]), and we withdrew our earlier claim that gate and dilation drive robustness. Between-checkpoint spread was large: E1 BACC 72.75 ± 8.41 on repeat 0, and 71.56 ± 6.53 on 10 further checkpoints. ResNet-18 scored 67.41 ± 5.81 across 15 checkpoints.
 With the training patients fixed, the seed alone gave a pooled BACC SD of 6.63 [4.48, 12.71] on MP-IDB, above our predicted 3 to 6, and an AUC SD of .027 [.018, .052]. The same checkpoints had an SD of .18 [.12, .35] on NIH. On one fold, two seeds differed by .15 on NIH and by 13.7 on MP-IDB, and E1's best value of 85.7 fell to a mean of 74.1 on new seeds. Sensitivity drove the spread (19.9 to 74.4), while specificity stayed between 94.5 and 99.3.
 
-Training-time colour transfer raised BACC by +7.05 [4.35, 9.65] and AUC by +.059 [.036, .088], against our prediction of little change. Test-time Reinhard normalisation lowered BACC by 18.75 [15.03, 22.73].
+Training-time colour transfer raised BACC by +7.05 [4.35, 9.65] and AUC by +.059 [.036, .088], against our prediction of little change. Test-time Reinhard normalisation lowered BACC by 18.75 [15.03, 22.73]. The registered protocol paired a field-level source std with a cell-level target std; an unregistered rerun with matched definitions was still −15.37 [−18.73, −12.29], so the flaw explains only part of the harm.
 
 The dark-spot rule reached AUC .987 and BACC 93.0 on MP-IDB (exploratory; development data).
 
@@ -152,7 +153,7 @@ Candidate 3 had almost identical AUC across crop masks (.981 to .982), and simil
 
 Both crop rules were scored in full: 79,722 crops each, crop order and file hashes verified, no missing values and no rescore. Both score manifests were committed before any metric was calculated, and each crop rule was calculated once. The primary set held 79,619 cells from 1,328 images, with 2,425 parasitized (3.05%).
 
-**Table 4. BBBC041, one-shot.** Thresholds frozen on NIH. PPV at the natural 3.05% prevalence.
+**Table 3. BBBC041, one-shot.** Thresholds frozen on NIH. PPV at the natural 3.05% prevalence.
 
 | Candidate | Ellipse AUC / BACC | SE / SP | PPV | Otsu AUC / BACC | SE / SP | PPV |
 |---|---|---|---|---|---|---|
@@ -170,9 +171,9 @@ Sensitivity by stage was 98.5 to 100 for the feature at every stage. For candida
 
 ### 3.8 Prediction record
 
-Table 3 lists every dated prediction and its outcome, including misses and later corrections. Only E1 and E4 were dated externally (Milestone 3, 2026-10-05). All other dates are self-reported.
+Table 4 lists every dated prediction and its outcome, including misses and later corrections. Only E1 and E4 were dated externally (Milestone 3, 2026-10-05). All other dates are self-reported.
 
-**Table 3. Prediction record.**
+**Table 4. Prediction record.**
 
 | Experiment | Written | Prediction | Outcome |
 |---|---|---|---|
@@ -189,8 +190,9 @@ Table 3 lists every dated prediction and its outcome, including misses and later
 | E5b | 2026-11-02 | Darkest pixel beats Grad-CAM; a centre rule stays in a stated range | Primary **supported** (15 of 15). Centre range **missed** (63.2) |
 | E8r | 2026-11-02 | LayerNorm's leakage gain replicates, about +.3 | **Not replicated:** +.15 [−.05, .36] |
 | E10 A | 2026-11-02 | Date explains at least 70% of patient colour variance; RedDino shared-date AUC below .75 | First **supported** (86.5%). Second **missed narrowly** (.767) |
-| E10 B | 2026-11-02 | Session gap about +.35, falsified below .29 | **Falsified:** +.24 [−.06, .59], near the MDE, one repeat |
+| E10 B | 2026-11-02 | Session gap about +.35, falsified below .29 | **Not supported** by its rule: +.24 [−.06, .59]. The CI holds both 0 and +.35, so unresolved; one repeat |
 | E12 | 2026-11-02 | Seed SD 3 to 6 BACC on MP-IDB; NIH SD under .5; fold 2 regresses by at least 3; unused checkpoints agree | SD range **missed high** (6.63). The other three **supported** |
+| E13 | 2026-11-03 | No attention: BACC −.5 to −2.5, CI below 0, SE falls more than SP; max-pool head: |ΔBACC| < .29, CI includes 0 | No attention **supported** (−.74). Max-pool **missed:** −.19, CI excludes 0 |
 | E11 | 2026-11-02 | Feature holds most likely (45%); feature BACC 78 to 90; candidate 3 BACC 65 to 85 | **Wrong:** Trained model wins (15%). Feature BACC **missed** (61.3), candidate 3 **missed high** (92.1). Probe, leukocyte, PPV and group predictions **supported** |
 
 E8 carried no prediction, was exploratory, and did not replicate in E8r.
@@ -201,9 +203,9 @@ The outcome was fixed by a rule written before scoring, and so was the Discussio
 
 **On a dataset that played no part in development, trained ensembles beat a single NIH-fitted measurement, on ranking and on fixed-threshold accuracy, under both crop rules.** Our leading prediction was that the feature would hold. It did not, and the margins were wide.
 
-On curated NIH crops the gap between a trained model and the feature is about one point. Under shift to BBBC041 it grew to 25 to 31 points of balanced accuracy. Most of that came from the operating point, not the ranking: the feature's AUC stayed above .90, and on the smaller acquisition group it nearly matched the ensembles. On the larger group its NIH threshold called most uninfected cells, the same pattern MalariaNet reported on BBBC041 (sensitivity 96.4%, specificity 18.0%) [5]. A fixed cue can keep its ranking and still lose its threshold, and neither NIH nor MP-IDB revealed this.
+On curated NIH crops the gap between a trained model and the feature is about one point. Under shift to BBBC041 it grew to 25 to 31 points of balanced accuracy. Most of that came from the operating point, not the ranking: the feature's AUC stayed above .90, and on the smaller acquisition group it nearly matched the ensembles. On the larger group its NIH threshold called most uninfected cells, the same high-sensitivity, low-specificity pattern MalariaNet reported on BBBC041 (sensitivity 96.4%, specificity 18.0%) [5], although its 53.2% accuracy implies a far higher parasitized share than our natural 3.05%, so the figures are not directly comparable. A fixed cue can keep its ranking and still lose its threshold, and neither NIH nor MP-IDB revealed this.
 
-Colour transfer mattered. Of the two trained ensembles, the colour-transfer one had the higher AUC under both crop rules and kept a usable threshold, and it was the only candidate that rejected most leukocytes. This fits E6c, where colour transfer helped on MP-IDB. But E12 showed that a new seed alone moves external balanced accuracy with an SD of 6.6, so we tested ensembles, and a single checkpoint might not repeat this result.
+Colour transfer may have mattered, but this test does not isolate it. Of the two trained ensembles, the colour-transfer one had the higher AUC under both crop rules (+.011 [.007, .017] ellipse) and kept a usable threshold, and it was the only candidate that rejected most leukocytes. But candidate 3 differs from candidate 2 in colour transfer, ensemble size (20 against 5) and architecture mix (three DANet variants and ResNet-18) at once. The direction fits E6c, where colour transfer alone helped on MP-IDB. But E12 showed that a new seed alone moves external balanced accuracy with an SD of 6.6, so we tested ensembles, and a single checkpoint might not repeat this result.
 
 Development data misled us. Rehearsal on MP-IDB, reused for many decisions including the feature's discovery, favoured the feature on ellipse crops. BBBC041 reversed that. External claims should rest on data untouched by development, with candidates frozen and hashed before scoring.
 
@@ -211,7 +213,7 @@ Development data misled us. Rehearsal on MP-IDB, reused for many decisions inclu
 
 **What this does not show.** It does not show that the models learned parasite morphology: E5b found that a no-model rule pointing to the darkest pixel hit parasites more often than Grad-CAM. It cannot assign the shift to species, stain or acquisition, which change together. It is one dataset, and PPV of 13 to 26% at 3% prevalence rules out any claim of clinical use.
 
-**Limitations.** Prediction dates are self-reported. Date is a proxy for session. E7's flagged cells were not reviewed by an expert. MP-IDB was reused for development, so its feature results are exploratory. The crop audit was done by an AI assistant, not a microscopist. BBBC041's boxes are not masks. Species, stage mix and stain all change at once, so
+**Limitations.** Prediction dates are self-reported. Date is a proxy for session. E7's flagged cells were not reviewed by an expert. MP-IDB was reused for development, so its feature results are exploratory. The crop audit was done by an AI assistant, not a microscopist. BBBC041's boxes are not masks. Red cell boxes overlapping a parasite box (4,344) were excluded, removing some hard negatives, so specificity may be optimistic. Candidates 2 and 3 differ in more than colour transfer. E13 used one seed per arm. Species, stage mix and stain all change at once, so
 transfer failures cannot be assigned to one cause. Curated crops are not a field workflow, and no result here supports clinical use.
 
 ## Declarations
