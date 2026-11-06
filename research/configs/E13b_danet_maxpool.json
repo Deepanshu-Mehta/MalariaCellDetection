@@ -1,0 +1,1 @@
+{"name": "E13b_danet_maxpool", "model": "danet", "head_pool": "max", "epochs": 50, "_note": "E13b (2026-11-03): E1_danet with the final 7x7 average pool replaced by a 7x7 max pool. Everything else identical to E1. Run on grouped r0 f0-4, train_seed 0."}

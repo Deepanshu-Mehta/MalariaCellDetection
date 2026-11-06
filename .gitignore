@@ -59,3 +59,6 @@ research_notes/
 !research/experiments/E12_retraining_variance/scores/*.npy
 research/runs_kaggle/**/code/
 research/experiments/E6b_five_checkpoint_external_rescore/_cache/
+
+# --- Browser automation scratch ---
+.playwright-mcp/

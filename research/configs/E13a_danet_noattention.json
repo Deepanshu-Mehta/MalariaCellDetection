@@ -1,0 +1,1 @@
+{"name": "E13a_danet_noattention", "model": "danet", "attention": "none", "epochs": 50, "_note": "E13a (2026-11-03): E1_danet with every Dilated Attention Block reduced to its 1x1 projection. Everything else identical to E1. Run on grouped r0 f0-4, train_seed 0."}

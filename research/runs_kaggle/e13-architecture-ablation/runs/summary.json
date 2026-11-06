@@ -1,0 +1,132 @@
+[
+ {
+  "i": 0,
+  "gpu": 0,
+  "job": {
+   "config": "E13b_danet_maxpool",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 1.1263935477203793
+ },
+ {
+  "i": 1,
+  "gpu": 1,
+  "job": {
+   "config": "E13b_danet_maxpool",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 1
+  },
+  "returncode": 0,
+  "hours": 1.1440153872304493
+ },
+ {
+  "i": 2,
+  "gpu": 0,
+  "job": {
+   "config": "E13b_danet_maxpool",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 2
+  },
+  "returncode": 0,
+  "hours": 1.1371532318327162
+ },
+ {
+  "i": 3,
+  "gpu": 1,
+  "job": {
+   "config": "E13b_danet_maxpool",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 3
+  },
+  "returncode": 0,
+  "hours": 1.1720601797766155
+ },
+ {
+  "i": 4,
+  "gpu": 0,
+  "job": {
+   "config": "E13b_danet_maxpool",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 4
+  },
+  "returncode": 0,
+  "hours": 1.1677950345807606
+ },
+ {
+  "i": 5,
+  "gpu": 1,
+  "job": {
+   "config": "E13a_danet_noattention",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 0
+  },
+  "returncode": 0,
+  "hours": 0.9609384435415268
+ },
+ {
+  "i": 6,
+  "gpu": 1,
+  "job": {
+   "config": "E13a_danet_noattention",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 1
+  },
+  "returncode": 0,
+  "hours": 0.9320376832617654
+ },
+ {
+  "i": 7,
+  "gpu": 0,
+  "job": {
+   "config": "E13a_danet_noattention",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 2
+  },
+  "returncode": 0,
+  "hours": 0.9120218212074703
+ },
+ {
+  "i": 8,
+  "gpu": 1,
+  "job": {
+   "config": "E13a_danet_noattention",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 3
+  },
+  "returncode": 0,
+  "hours": 0.9269787810908423
+ },
+ {
+  "i": 9,
+  "gpu": 0,
+  "job": {
+   "config": "E13a_danet_noattention",
+   "split": "grouped",
+   "set": [],
+   "repeat": 0,
+   "fold": 4
+  },
+  "returncode": 0,
+  "hours": 0.8692029727167553
+ }
+]

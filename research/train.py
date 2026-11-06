@@ -35,6 +35,7 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available()
 
 DEFAULTS = dict(
     name="unnamed", model="danet", base_channels=8, gate="softmax", dilation_mode="cascade", norm="instance",
+    attention="dilated", head_pool="avg",                 # E13 architecture switches (2026-11-03)
     pretrained=True, img_size=224, batch_size=64, epochs=50,
     optimizer="rmsprop_onecycle", max_lr=0.001, weight_decay=0.0,
     rotation=15, flip_p=0.2, colour_jitter=None,          # e.g. [0.1, 0.1, 0.5, 0.1] = M3 hypothesis
